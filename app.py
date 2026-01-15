@@ -347,7 +347,7 @@ players = load_players()
 class Team:
     def __init__(self, name):
         self.name = name
-        self.purse = 120.0
+        self.purse = 130.0
         self.squad = []
         self.overseas = 0
         self.points = 0
@@ -454,7 +454,10 @@ if st.session_state.phase == 'auction':
             st.session_state.ai_bid_done = True
             st.rerun()
 
-        st.write(f"Current Bid: {st.session_state.current_bid:.1f} Cr by {st.session_state.current_bidder}")
+        if st.session_state.current_bidder == 'Auctioneer':
+            st.write("Current Bid: No bids yet")
+        else:
+            st.write(f"Current Bid: {st.session_state.current_bid:.1f} Cr by {st.session_state.current_bidder}")
 
         col_bid1, col_bid2, col_bid3, col_pass = st.columns(4)
         with col_bid1:
@@ -658,9 +661,10 @@ if 'innings' in st.session_state and st.session_state.innings:
 
 # Sidebar
 st.sidebar.title("Your Team")
-if st.session_state.user_team and st.session_state.user_team.squad:
+if st.session_state.user_team:
     squad_df = pd.DataFrame(st.session_state.user_team.squad)
-    st.sidebar.dataframe(squad_df[['name', 'role']])
+    if not squad_df.empty:
+        st.sidebar.dataframe(squad_df[['name', 'role']])
     st.sidebar.write(f"Purse: {st.session_state.user_team.purse:.2f} Cr")
     st.sidebar.write(f"Overseas: {st.session_state.user_team.overseas}/8")
     st.sidebar.write(f"Points: {st.session_state.user_team.points}, NRR: {st.session_state.user_team.nrr:.2f}")
