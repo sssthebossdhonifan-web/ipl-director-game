@@ -539,7 +539,6 @@ if st.session_state.phase == 'season':
             st.write(f"{t.name}: {t.points} pts, NRR {t.nrr:.2f}")
         if st.session_state.user_team in standings[:4]:
             st.write("You made playoffs!")
-        return
 
 # Ball-by-ball match sim
 if 'innings' in st.session_state and st.session_state.innings:
