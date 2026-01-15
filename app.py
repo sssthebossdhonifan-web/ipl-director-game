@@ -388,7 +388,7 @@ if 'innings' not in st.session_state:
     st.session_state.innings = None
 
 # Team selection
-if st.session_state.phase = 'team_select':
+if st.session_state.phase == 'team_select':
     st.title("Choose Your IPL Team")
     team_options = ['CSK', 'MI', 'RCB', 'KKR', 'SRH', 'DC', 'PBKS', 'RR', 'GT', 'LSG']
     selected_team = st.selectbox("Select Team", team_options)
