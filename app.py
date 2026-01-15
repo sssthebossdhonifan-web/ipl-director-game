@@ -352,6 +352,22 @@ class Team:
         self.overseas = 0
         self.points = 0
         self.nrr = 0.0
+        self.role_needs = {'BAT': 6, 'AR': 4, 'WK': 2, 'BOWL': 6}
+
+    def update_needs(self):
+        roles = {'BAT': 0, 'AR': 0, 'BOWL': 0, 'WK': 0}
+        for p in self.squad:
+            roles[p['role']] += 1
+        for r in self.role_needs:
+            self.role_needs[r] = max(0, self.role_needs[r] - roles.get(r, 0))
+
+    def interested_in(self, player):
+        if self.role_needs.get(player['role'], 0) > 0 and len(self.squad) < 24:
+            ov_ok = player['country'] == 'India' or self.overseas < 8
+            value = (player['bat_skill'] + player['bowl_skill']) / 2
+            if value > 60 and self.purse > player['base_price'] * 1.2:
+                return ov_ok
+        return False
 
     def can_buy(self, player, price):
         if self.purse < price or len(self.squad) >= 25:
@@ -365,6 +381,7 @@ class Team:
         self.purse -= price
         if player['country'] != 'India':
             self.overseas += 1
+        self.update_needs()
 
 # AI teams
 ai_teams = [Team(name) for name in ['CSK', 'MI', 'RCB', 'KKR', 'SRH', 'DC', 'PBKS', 'RR', 'GT', 'LSG']]
@@ -386,6 +403,8 @@ if 'match_index' not in st.session_state:
     st.session_state.match_index = 0
 if 'innings' not in st.session_state:
     st.session_state.innings = None
+if 'bid_time' not in st.session_state:
+    st.session_state.bid_time = 0
 
 # Team selection
 if st.session_state.phase == 'team_select':
@@ -415,6 +434,7 @@ if st.session_state.phase == 'auction':
 
         if st.session_state.current_bid == 0.0:
             st.session_state.current_bid = player['base_price']
+            st.session_state.bid_time = time.time()
 
         # AI bidding simulation
         if 'ai_bid_done' not in st.session_state:
@@ -422,25 +442,29 @@ if st.session_state.phase == 'auction':
         if not st.session_state.ai_bid_done:
             time.sleep(1)  # Simulate delay
             for team in ai_teams:
-                if random.random() < 0.4 and team.can_buy(player, st.session_state.current_bid + 0.2):
-                    inc = random.uniform(0.2, 1.0)
-                    st.session_state.current_bid += inc
-                    st.session_state.current_bidder = team.name
-                    st.write(f"{team.name} bids {st.session_state.current_bid:.2f} Cr!")
-                    break
+                if team.interested_in(player) and team.can_buy(player, st.session_state.current_bid + 0.1):
+                    inc = random.uniform(0.1, 0.5) if st.session_state.current_bid < 10 else random.uniform(0.5, 1.0)
+                    if st.session_state.current_bid + inc < team.purse * 0.5:  # Realistic cap
+                        st.session_state.current_bid += inc
+                        st.session_state.current_bid = round(st.session_state.current_bid, 1)
+                        st.session_state.current_bidder = team.name
+                        st.write(f"{team.name} bids {st.session_state.current_bid:.1f} Cr!")
+                        st.session_state.bid_time = time.time()
+                        break
             st.session_state.ai_bid_done = True
             st.rerun()
 
-        st.write(f"Current Bid: {st.session_state.current_bid:.2f} Cr by {st.session_state.current_bidder}")
+        st.write(f"Current Bid: {st.session_state.current_bid:.1f} Cr by {st.session_state.current_bidder}")
 
         col_bid1, col_bid2, col_bid3, col_pass = st.columns(4)
         with col_bid1:
-            if st.button("+0.2 Cr", key="bid02"):
-                new_bid = st.session_state.current_bid + 0.2
+            if st.button("+0.1 Cr", key="bid01"):
+                new_bid = st.session_state.current_bid + 0.1
                 if st.session_state.user_team.can_buy(player, new_bid):
                     st.session_state.current_bid = new_bid
                     st.session_state.current_bidder = st.session_state.user_team.name
                     st.session_state.ai_bid_done = False
+                    st.session_state.bid_time = time.time()
                     st.rerun()
         with col_bid2:
             if st.button("+0.5 Cr", key="bid05"):
@@ -449,6 +473,7 @@ if st.session_state.phase == 'auction':
                     st.session_state.current_bid = new_bid
                     st.session_state.current_bidder = st.session_state.user_team.name
                     st.session_state.ai_bid_done = False
+                    st.session_state.bid_time = time.time()
                     st.rerun()
         with col_bid3:
             if st.button("+1 Cr", key="bid1"):
@@ -457,22 +482,42 @@ if st.session_state.phase == 'auction':
                     st.session_state.current_bid = new_bid
                     st.session_state.current_bidder = st.session_state.user_team.name
                     st.session_state.ai_bid_done = False
+                    st.session_state.bid_time = time.time()
                     st.rerun()
         with col_pass:
             if st.button("Pass", key="pass"):
                 if st.session_state.current_bidder == st.session_state.user_team.name:
                     st.session_state.user_team.buy(player, st.session_state.current_bid)
-                    st.success(f"You bought {player['name']} for {st.session_state.current_bid:.2f} Cr!")
+                    st.success(f"You bought {player['name']} for {st.session_state.current_bid:.1f} Cr!")
                 elif st.session_state.current_bidder != 'Auctioneer':
                     winner = next(t for t in ai_teams if t.name == st.session_state.current_bidder)
                     winner.buy(player, st.session_state.current_bid)
-                    st.info(f"Sold to {winner.name} for {st.session_state.current_bid:.2f} Cr!")
+                    st.info(f"Sold to {winner.name} for {st.session_state.current_bid:.1f} Cr!")
                 else:
                     st.info("Unsold!")
                 st.session_state.auction_index += 1
                 st.session_state.current_bid = 0.0
                 st.session_state.current_bidder = 'Auctioneer'
                 st.session_state.ai_bid_done = False
+                st.session_state.bid_time = 0
+                st.rerun()
+        # Countdown for auto-sell
+        if st.session_state.current_bidder != 'Auctioneer':
+            elapsed = time.time() - st.session_state.bid_time
+            if elapsed > 5:
+                winner = st.session_state.user_team if st.session_state.current_bidder == st.session_state.user_team.name else next(t for t in ai_teams if t.name == st.session_state.current_bidder)
+                winner.buy(player, st.session_state.current_bid)
+                st.success(f"Sold to {winner.name} for {st.session_state.current_bid:.1f} Cr after countdown!")
+                st.session_state.auction_index += 1
+                st.session_state.current_bid = 0.0
+                st.session_state.current_bidder = 'Auctioneer'
+                st.session_state.ai_bid_done = False
+                st.session_state.bid_time = 0
+                st.rerun()
+            else:
+                remaining = 5 - int(elapsed)
+                st.write(f"Going twice... Sold in {remaining} seconds!")
+                time.sleep(1)
                 st.rerun()
     else:
         st.success("Auction Complete!")
@@ -507,6 +552,8 @@ if st.session_state.phase == 'trade':
                 ai_team.squad.remove(in_p)
                 st.session_state.user_team.squad.append(in_p)
                 ai_team.squad.append(out_p)
+                st.session_state.user_team.update_needs()
+                ai_team.update_needs()
                 st.success("Trade Accepted!")
                 st.session_state.trade_done += 1
             else:
@@ -611,7 +658,7 @@ if 'innings' in st.session_state and st.session_state.innings:
 
 # Sidebar
 st.sidebar.title("Your Team")
-if st.session_state.user_team:
+if st.session_state.user_team and st.session_state.user_team.squad:
     squad_df = pd.DataFrame(st.session_state.user_team.squad)
     st.sidebar.dataframe(squad_df[['name', 'role']])
     st.sidebar.write(f"Purse: {st.session_state.user_team.purse:.2f} Cr")
