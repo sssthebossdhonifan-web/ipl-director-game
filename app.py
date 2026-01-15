@@ -388,14 +388,14 @@ if 'innings' not in st.session_state:
     st.session_state.innings = None
 
 # Team selection
-if st.session_state.phase == 'team_select':
+if st.session_state.phase = 'team_select':
     st.title("Choose Your IPL Team")
     team_options = ['CSK', 'MI', 'RCB', 'KKR', 'SRH', 'DC', 'PBKS', 'RR', 'GT', 'LSG']
     selected_team = st.selectbox("Select Team", team_options)
     if st.button("Start Auction"):
         st.session_state.user_team = Team(selected_team)
         st.session_state.phase = 'auction'
-        st.experimental_rerun()
+        st.rerun()
 
 # Auction phase
 if st.session_state.phase == 'auction':
@@ -429,7 +429,7 @@ if st.session_state.phase == 'auction':
                     st.write(f"{team.name} bids {st.session_state.current_bid:.2f} Cr!")
                     break
             st.session_state.ai_bid_done = True
-            st.experimental_rerun()
+            st.rerun()
 
         st.write(f"Current Bid: {st.session_state.current_bid:.2f} Cr by {st.session_state.current_bidder}")
 
@@ -441,7 +441,7 @@ if st.session_state.phase == 'auction':
                     st.session_state.current_bid = new_bid
                     st.session_state.current_bidder = st.session_state.user_team.name
                     st.session_state.ai_bid_done = False
-                    st.experimental_rerun()
+                    st.rerun()
         with col_bid2:
             if st.button("+0.5 Cr", key="bid05"):
                 new_bid = st.session_state.current_bid + 0.5
@@ -449,7 +449,7 @@ if st.session_state.phase == 'auction':
                     st.session_state.current_bid = new_bid
                     st.session_state.current_bidder = st.session_state.user_team.name
                     st.session_state.ai_bid_done = False
-                    st.experimental_rerun()
+                    st.rerun()
         with col_bid3:
             if st.button("+1 Cr", key="bid1"):
                 new_bid = st.session_state.current_bid + 1.0
@@ -457,7 +457,7 @@ if st.session_state.phase == 'auction':
                     st.session_state.current_bid = new_bid
                     st.session_state.current_bidder = st.session_state.user_team.name
                     st.session_state.ai_bid_done = False
-                    st.experimental_rerun()
+                    st.rerun()
         with col_pass:
             if st.button("Pass", key="pass"):
                 if st.session_state.current_bidder == st.session_state.user_team.name:
@@ -473,12 +473,12 @@ if st.session_state.phase == 'auction':
                 st.session_state.current_bid = 0.0
                 st.session_state.current_bidder = 'Auctioneer'
                 st.session_state.ai_bid_done = False
-                st.experimental_rerun()
+                st.rerun()
     else:
         st.success("Auction Complete!")
         if st.button("Proceed to Trades"):
             st.session_state.phase = 'trade'
-            st.experimental_rerun()
+            st.rerun()
 
 # Trade phase
 if st.session_state.phase == 'trade':
@@ -511,12 +511,12 @@ if st.session_state.phase == 'trade':
                 st.session_state.trade_done += 1
             else:
                 st.error("Trade Rejected!")
-            st.experimental_rerun()
+            st.rerun()
     else:
         st.success("Trades Complete!")
         if st.button("Proceed to Season"):
             st.session_state.phase = 'season'
-            st.experimental_rerun()
+            st.rerun()
 
 # Season and Match phase
 if st.session_state.phase == 'season':
@@ -528,7 +528,7 @@ if st.session_state.phase == 'season':
         st.write(f"Match vs {opp.name}")
         if st.button("Start Match"):
             st.session_state.innings = {'score': 0, 'wickets': 0, 'overs': 0.0, 'target': 0, 'bat_team': st.session_state.user_team, 'bowl_team': opp, 'ball_index': 0, 'rain': False}
-            st.experimental_rerun()
+            st.rerun()
     else:
         st.success("Season Complete! Calculate standings.")
         # Simple standings
@@ -576,13 +576,13 @@ if 'innings' in st.session_state and st.session_state.innings:
                     innings['target'] = int(innings['target'] * (resource / full) + 1)
                     st.write(f"Rain! Target adjusted to {innings['target']}")
             st.write(f"Score: {innings['score']}/{innings['wickets']} in {innings['overs']:.1f} overs")
-            st.experimental_rerun()
+            st.rerun()
     else:
         if innings['target'] == 0:
             innings['target'] = innings['score'] + 1
             st.session_state.innings = {'score': 0, 'wickets': 0, 'overs': 0.0, 'target': innings['target'], 'bat_team': innings['bowl_team'], 'bowl_team': innings['bat_team'], 'ball_index': 0, 'rain': False}
             st.write("Second Innings Start")
-            st.experimental_rerun()
+            st.rerun()
         else:
             user = st.session_state.user_team
             opp = innings['bowl_team'] if innings['bat_team'] == user else innings['bat_team']
@@ -607,7 +607,7 @@ if 'innings' in st.session_state and st.session_state.innings:
             st.write(f"Match Result: {winner.name if winner else 'Tie'} wins!")
             st.session_state.match_index += 1
             st.session_state.innings = None
-            st.experimental_rerun()
+            st.rerun()
 
 # Sidebar
 st.sidebar.title("Your Team")
