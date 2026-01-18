@@ -17,7 +17,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# DLS Resource Table (simplified)
+# DLS Resource Table (simplified, expand as needed)
 dls_table = [
     [100.0, 96.9, 95.6, 91.7, 87.7, 83.5, 79.2, 75.1, 71.5, 68.3, 65.0, 61.3, 57.9, 54.0, 49.3, 41.7, 36.2, 30.8, 25.4, 19.7, 13.7],  # wk 0
     [93.0, 90.9, 86.7, 82.3, 78.2, 74.3, 70.7, 67.4, 63.7, 59.9, 56.0, 52.3, 48.3, 44.2, 40.2, 38.5, 33.4, 28.0, 22.8, 17.2, 11.3],
@@ -32,7 +32,7 @@ dls_table = [
     [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 ]
 
-# FULL PLAYER DATA (all from your query, with placeholder photos/stats)
+# Full player data
 @st.cache_data
 def load_players():
     data = [
@@ -73,7 +73,7 @@ def load_players():
         ('Josh Hazlewood', 'Australia', 'BOWL', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Josh+Hazlewood', {'matches': 27, 'wickets': 35, 'economy': 8.06, 'runs': 36}),
         ('Avesh Khan', 'India', 'BOWL', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Avesh+Khan', {'matches': 47, 'wickets': 55, 'economy': 8.92, 'runs': 109}),
         ('Prasidh Krishna', 'India', 'BOWL', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Prasidh+Krishna', {'matches': 17, 'wickets': 19, 'economy': 9.83, 'runs': 19}),
-        ('T. Natarajan', 'India', 'BOWL', 'Capped', 2.0, 'https://via.placeholder.com/200?text=T+Natarajan', {'matches': 48, 'wickets': 56, 'economy': 8.62, 'runs': 38}),
+        ('T. Natarajan', 'India', 'BOWL', 'Capped', 2.0, 'https://via.placeholder.com/200?text=T.+Natarajan', {'matches': 48, 'wickets': 56, 'economy': 8.62, 'runs': 38}),
         ('Anrich Nortje', 'South Africa', 'BOWL', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Anrich+Nortje', {'matches': 40, 'wickets': 53, 'economy': 8.4, 'runs': 91}),
         ('Noor Ahmad', 'Afghanistan', 'BOWL', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Noor+Ahmad', {'matches': 13, 'wickets': 14, 'economy': 7.5, 'runs': 15}),
         ('Rahul Chahar', 'India', 'BOWL', 'Capped', 1.0, 'https://via.placeholder.com/200?text=Rahul+Chahar', {'matches': 69, 'wickets': 65, 'economy': 7.52, 'runs': 79}),
@@ -218,133 +218,3 @@ def load_players():
         ('Abhijeet Tomar', 'India', 'BAT', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Abhijeet+Tomar', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
         ('Krish Bhagat', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Krish+Bhagat', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
         ('Sohraab Dhaliwal', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Sohraab+Dhaliwal', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Harsh Dubey', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Harsh+Dubey', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Ramakrishna Ghosh', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Ramakrishna+Ghosh', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Raj Limbani', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Raj+Limbani', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Ninad Rathva', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Ninad+Rathva', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Vivrant Sharma', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Vivrant+Sharma', {'matches': 3, 'runs': 69, 'avg': 34.5, 'wickets': 0}),
-        ('Shiva Singh', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Shiva+Singh', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Sayed Irfan Aftab', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Sayed+Irfan+Aftab', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
-        ('Anirudh Chowdhary', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Anirudh+Chowdhary', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
-        ('Anshuman Hooda', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Anshuman+Hooda', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
-        ('Siddharth Kaul', 'India', 'BOWL', 'Uncapped', 0.4, 'https://via.placeholder.com/200?text=Siddharth+Kaul', {'matches': 38, 'wickets': 42, 'economy': 8.56, 'runs': 19}),
-        ('Prashant Sai Painkra', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Prashant+Sai+Painkra', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
-        ('Venkata Satyanarayana Penmetsa', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Venkata+Satyanarayana+Penmetsa', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
-        ('Yeddala Reddy', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Yeddala+Reddy', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
-        ('Zak Foulkes', 'New Zealand', 'AR', 'Capped', 0.75, 'https://via.placeholder.com/200?text=Zak+Foulkes', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Chris Green', 'Australia', 'AR', 'Capped', 1.0, 'https://via.placeholder.com/200?text=Chris+Green', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Shakib Al Hasan', 'Bangladesh', 'AR', 'Capped', 1.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/299572.png', {'matches': 71, 'runs': 1401, 'avg': 23.35, 'wickets': 140}),
-        ('Mehidy Hasan Miraz', 'Bangladesh', 'AR', 'Capped', 1.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/629074.png', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Wiaan Mulder', 'South Africa', 'AR', 'Capped', 0.75, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/595921.png', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Dwaine Pretorius', 'South Africa', 'AR', 'Capped', 0.75, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/327830.png', {'matches': 1, 'runs': 0, 'avg': 0, 'wickets': 1}),
-        ('Dasun Shanaka', 'Sri Lanka', 'AR', 'Capped', 0.75, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/437428.png', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Shoriful Islam', 'Bangladesh', 'BOWL', 'Capped', 0.75, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/990023.png', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
-        ('Blessing Muzarabani', 'Zimbabwe', 'BOWL', 'Capped', 0.75, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/824541.png', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
-        ('Matthew Potts', 'England', 'BOWL', 'Capped', 1.5, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1039485.png', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
-        ('Tanzim Hasan Sakib', 'Bangladesh', 'BOWL', 'Capped', 0.75, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/990025.png', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
-        ('Benjamin Sears', 'New Zealand', 'BOWL', 'Capped', 1.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/959767.png', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
-        ('Tim Southee', 'New Zealand', 'BOWL', 'Capped', 1.5, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/232359.png', {'matches': 44, 'wickets': 43, 'economy': 8.4, 'runs': 64}),
-        ('John Turner', 'England', 'BOWL', 'Capped', 1.5, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1039486.png', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
-        ('Joshua Brown', 'Australia', 'BAT', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Joshua+Brown', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Oliver Davies', 'Australia', 'BAT', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Oliver+Davies', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Bevan John Jacobs', 'New Zealand', 'BAT', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Bevan+John+Jacobs', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Atharva Kale', 'India', 'BAT', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Atharva+Kale', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Abhishek Nair', 'India', 'BAT', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Abhishek+Nair', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Vishwanath Pratap Singh', 'India', 'BAT', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Vishwanath+Pratap+Singh', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Nasir Lone', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Nasir+Lone', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Brandon McMullen', 'Scotland', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Brandon+McMullen', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('S. Midhun', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=S+Midhun', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Abid Mushtaq', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Abid+Mushtaq', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Mahesh Pithiya', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Mahesh+Pithiya', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Maramreddy Reddy', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Maramreddy+Reddy', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Atit Sheth', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Atit+Sheth', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Jonty Sidhu', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Jonty+Sidhu', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Mohit Avasthi', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Mohit+Avasthi', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
-        ('Faridoon Dawoodzai', 'Afghanistan', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Faridoon+Dawoodzai', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
-        ('Praful Hinge', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Praful+Hinge', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
-        ('Pankaj Jaswal', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Pankaj+Jaswal', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
-        ('Vijay Kumar', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Vijay+Kumar', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
-        ('Ashok Sharma', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Ashok+Sharma', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
-        ('Mujtaba Yousuf', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Mujtaba+Yousuf', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
-        ('Ashton Agar', 'Australia', 'AR', 'Capped', 1.25, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/505120.png', {'matches': 5, 'runs': 22, 'avg': 7.33, 'wickets': 4}),
-        ('Roston Chase', 'West Indies', 'AR', 'Capped', 0.75, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/604302.png', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Junior Dala', 'South Africa', 'AR', 'Capped', 0.75, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/446263.png', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Mahedi Hasan', 'Bangladesh', 'AR', 'Capped', 0.75, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/629074.png', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Nangeyalia Kharote', 'Afghanistan', 'AR', 'Capped', 0.75, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1187714.png', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Dan Lawrence', 'England', 'AR', 'Capped', 1.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/509855.png', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('Nathan Smith', 'New Zealand', 'AR', 'Capped', 1.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/959767.png', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
-        ('James Anderson', 'England', 'BOWL', 'Capped', 1.25, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/8608.png', {'matches': 1, 'wickets': 0, 'economy': 6.0, 'runs': 0}),
-        ('Kyle Jamieson', 'New Zealand', 'BOWL', 'Capped', 1.5, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/539302.png', {'matches': 9, 'wickets': 11, 'economy': 8.0, 'runs': 12}),
-        # Retained players - full from your query
-        ('Ruturaj Gaikwad', 'India', 'BAT', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1060380.png', {'matches': 52, 'runs': 1797, 'avg': 39.93, 'wickets': 0}),
-        ('Matheesha Pathirana', 'Sri Lanka', 'BOWL', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1192220.png', {'matches': 18, 'wickets': 32, 'economy': 7.88, 'runs': 1}),
-        ('Shivam Dube', 'India', 'AR', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1070173.png', {'matches': 42, 'runs': 1002, 'avg': 28.63, 'wickets': 4}),
-        ('Ravindra Jadeja', 'India', 'AR', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/234675.png', {'matches': 226, 'runs': 2693, 'avg': 29.27, 'wickets': 152}),
-        ('MS Dhoni', 'India', 'WK', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/28081.png', {'matches': 250, 'runs': 5082, 'avg': 38.79, 'wickets': 0}),
-        ('Axar Patel', 'India', 'AR', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/554691.png', {'matches': 87, 'runs': 944, 'avg': 18.88, 'wickets': 84}),
-        ('Kuldeep Yadav', 'India', 'BOWL', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/699431.png', {'matches': 78, 'wickets': 102, 'economy': 8.27, 'runs': 87}),
-        ('Tristan Stubbs', 'South Africa', 'BAT', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1185539.png', {'matches': 6, 'runs': 71, 'avg': 14.2, 'wickets': 0}),
-        ('Abhishek Porel', 'India', 'WK', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Abhishek+Porel', {'matches': 5, 'runs': 86, 'avg': 28.67, 'wickets': 0}),
-        ('Rashid Khan', 'Afghanistan', 'BOWL', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/793463.png', {'matches': 109, 'wickets': 139, 'economy': 6.69, 'runs': 421}),
-        ('Shubman Gill', 'India', 'BAT', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1070174.png', {'matches': 36, 'runs': 1376, 'avg': 42.99, 'wickets': 0}),
-        ('Sai Sudharsan', 'India', 'BAT', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1151270.png', {'matches': 19, 'runs': 661, 'avg': 41.31, 'wickets': 0}),
-        ('Rahul Tewatia', 'India', 'AR', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/475281.png', {'matches': 60, 'runs': 730, 'avg': 20.28, 'wickets': 32}),
-        ('Shahrukh Khan', 'India', 'AR', 'Uncapped', 0.3, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/777537.png', {'matches': 12, 'runs': 132, 'avg': 16.5, 'wickets': 0}),
-        ('Rinku Singh', 'India', 'BAT', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/723533.png', {'matches': 23, 'runs': 474, 'avg': 59.25, 'wickets': 0}),
-        ('Varun Chakaravarthy', 'India', 'BOWL', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1151271.png', {'matches': 47, 'wickets': 49, 'economy': 7.3, 'runs': 19}),
-        ('Sunil Narine', 'West Indies', 'AR', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/230558.png', {'matches': 177, 'runs': 1029, 'avg': 16.33, 'wickets': 183}),
-        ('Andre Russell', 'West Indies', 'AR', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/276298.png', {'matches': 112, 'runs': 2262, 'avg': 29.12, 'wickets': 99}),
-        ('Harshit Rana', 'India', 'BOWL', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1354980.png', {'matches': 7, 'wickets': 11, 'economy': 9.09, 'runs': 0}),
-        ('Ramandeep Singh', 'India', 'AR', 'Uncapped', 0.3, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1252358.png', {'matches': 7, 'runs': 125, 'avg': 41.67, 'wickets': 0}),
-        ('Nicholas Pooran', 'West Indies', 'WK', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/604302.png', {'matches': 62, 'runs': 1465, 'avg': 36.62, 'wickets': 0}),
-        ('Ravi Bishnoi', 'India', 'BOWL', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1175429.png', {'matches': 50, 'wickets': 53, 'economy': 7.75, 'runs': 43}),
-        ('Mayank Yadav', 'India', 'BOWL', 'Uncapped', 0.3, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1354981.png', {'matches': 4, 'wickets': 7, 'economy': 6.99, 'runs': 0}),
-        ('Mohsin Khan', 'India', 'BOWL', 'Uncapped', 0.3, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1131608.png', {'matches': 25, 'wickets': 24, 'economy': 9.44, 'runs': 8}),
-        ('Ayush Badoni', 'India', 'AR', 'Uncapped', 0.3, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1151272.png', {'matches': 24, 'runs': 437, 'avg': 29.13, 'wickets': 0}),
-        ('Jasprit Bumrah', 'India', 'BOWL', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/625383.png', {'matches': 133, 'wickets': 165, 'economy': 7.39, 'runs': 83}),
-        ('Suryakumar Yadav', 'India', 'BAT', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/446507.png', {'matches': 139, 'runs': 3597, 'avg': 32.4, 'wickets': 0}),
-        ('Hardik Pandya', 'India', 'AR', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/625371.png', {'matches': 123, 'runs': 2418, 'avg': 26.57, 'wickets': 53}),
-        ('Rohit Sharma', 'India', 'BAT', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/34102.png', {'matches': 257, 'runs': 6628, 'avg': 29.84, 'wickets': 15}),
-        ('Tilak Varma', 'India', 'BAT', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1175492.png', {'matches': 32, 'runs': 1005, 'avg': 37.22, 'wickets': 0}),
-        ('Shashank Singh', 'India', 'AR', 'Uncapped', 0.3, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/720471.png', {'matches': 14, 'runs': 354, 'avg': 44.25, 'wickets': 0}),
-        ('Prabhsimran Singh', 'India', 'WK', 'Uncapped', 0.3, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/942645.png', {'matches': 23, 'runs': 664, 'avg': 30.18, 'wickets': 0}),
-        ('Sanju Samson', 'India', 'WK', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/493160.png', {'matches': 152, 'runs': 3876, 'avg': 29.81, 'wickets': 0}),
-        ('Yashasvi Jaiswal', 'India', 'BAT', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1151273.png', {'matches': 37, 'runs': 1342, 'avg': 39.47, 'wickets': 0}),
-        ('Riyan Parag', 'India', 'AR', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1049489.png', {'matches': 33, 'runs': 609, 'avg': 25.38, 'wickets': 3}),
-        ('Dhruv Jurel', 'India', 'WK', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1175493.png', {'matches': 8, 'runs': 195, 'avg': 48.75, 'wickets': 0}),
-        ('Shimron Hetmyer', 'West Indies', 'BAT', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/564793.png', {'matches': 59, 'runs': 1104, 'avg': 29.84, 'wickets': 0}),
-        ('Sandeep Sharma', 'India', 'BOWL', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/450329.png', {'matches': 109, 'wickets': 106, 'economy': 7.81, 'runs': 34}),
-        ('Virat Kohli', 'India', 'BAT', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/253802.png', {'matches': 252, 'runs': 8004, 'avg': 38.67, 'wickets': 4}),
-        ('Rajat Patidar', 'India', 'BAT', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/823703.png', {'matches': 20, 'runs': 799, 'avg': 47, 'wickets': 0}),
-        ('Yash Dayal', 'India', 'BOWL', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1151274.png', {'matches': 17, 'wickets': 17, 'economy': 9.33, 'runs': 3}),
-        ('Heinrich Klaasen', 'South Africa', 'WK', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/38699.png', {'matches': 28, 'runs': 1047, 'avg': 41.88, 'wickets': 0}),
-        ('Pat Cummins', 'Australia', 'BOWL', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/489889.png', {'matches': 42, 'wickets': 46, 'economy': 9.28, 'runs': 120}),
-        ('Travis Head', 'Australia', 'BAT', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/530011.png', {'matches': 15, 'runs': 567, 'avg': 43.62, 'wickets': 1}),
-        ('Abhishek Sharma', 'India', 'AR', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1070183.png', {'matches': 31, 'runs': 484, 'avg': 17.93, 'wickets': 8}),
-        ('Nitish Kumar Reddy', 'India', 'AR', 'Capped', 2.0, 'https://img1.hscicdn.com/image/upload/f_auto/ls/cricket/cricinfo/players/1175494.png', {'matches': 13, 'runs': 303, 'avg': 33.67, 'wickets': 3}),
-    ]
-    players = []
-    for name, country, role, capped, base, photo, stats in data:
-        is_capped = capped == 'Capped'
-        bat = random.randint(70, 99) if role in ['BAT', 'WK'] else random.randint(40, 80)
-        bowl = random.randint(70, 99) if role in ['BOWL', 'AR'] else random.randint(20, 50)
-        field = random.randint(60, 95)
-        players.append({
-            'name': name,
-            'country': country,
-            'role': role,
-            'base_price': base,
-            'bat_skill': bat,
-            'bowl_skill': bowl,
-            'field_skill': field,
-            'photo': photo,
-            'stats': stats
-        })
-    random.shuffle(players)
-    return players
-
-players = load_players()
-
-# ... (rest of the code from previous fixed version, including Team class, AI teams, session state, phases, auction with countdown, trades, season, match sim, sidebar)
-
-# Note: The code is now complete with full data. If the response cuts off, it's due to length; the pattern is the same for all players in data.
