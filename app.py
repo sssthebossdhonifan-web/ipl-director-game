@@ -17,7 +17,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# DLS Resource Table (simplified, expand as needed)
+# DLS Resource Table
 dls_table = [
     [100.0, 96.9, 95.6, 91.7, 87.7, 83.5, 79.2, 75.1, 71.5, 68.3, 65.0, 61.3, 57.9, 54.0, 49.3, 41.7, 36.2, 30.8, 25.4, 19.7, 13.7],  # wk 0
     [93.0, 90.9, 86.7, 82.3, 78.2, 74.3, 70.7, 67.4, 63.7, 59.9, 56.0, 52.3, 48.3, 44.2, 40.2, 38.5, 33.4, 28.0, 22.8, 17.2, 11.3],
@@ -32,7 +32,7 @@ dls_table = [
     [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 ]
 
-# Full player data
+# FULL PLAYER DATA (all from your original query)
 @st.cache_data
 def load_players():
     data = [
@@ -218,3 +218,478 @@ def load_players():
         ('Abhijeet Tomar', 'India', 'BAT', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Abhijeet+Tomar', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
         ('Krish Bhagat', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Krish+Bhagat', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
         ('Sohraab Dhaliwal', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Sohraab+Dhaliwal', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Harsh Dubey', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Harsh+Dubey', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Ramakrishna Ghosh', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Ramakrishna+Ghosh', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Raj Limbani', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Raj+Limbani', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Ninad Rathva', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Ninad+Rathva', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Vivrant Sharma', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Vivrant+Sharma', {'matches': 3, 'runs': 69, 'avg': 34.5, 'wickets': 0}),
+        ('Shiva Singh', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Shiva+Singh', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Sayed Irfan Aftab', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Sayed+Irfan+Aftab', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
+        ('Anirudh Chowdhary', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Anirudh+Chowdhary', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
+        ('Anshuman Hooda', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Anshuman+Hooda', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
+        ('Siddharth Kaul', 'India', 'BOWL', 'Uncapped', 0.4, 'https://via.placeholder.com/200?text=Siddharth+Kaul', {'matches': 38, 'wickets': 42, 'economy': 8.56, 'runs': 19}),
+        ('Prashant Sai Painkra', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Prashant+Sai+Painkra', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
+        ('Venkata Satyanarayana Penmetsa', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Venkata+Satyanarayana+Penmetsa', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
+        ('Yeddala Reddy', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Yeddala+Reddy', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
+        ('Zak Foulkes', 'New Zealand', 'AR', 'Capped', 0.75, 'https://via.placeholder.com/200?text=Zak+Foulkes', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Chris Green', 'Australia', 'AR', 'Capped', 1.0, 'https://via.placeholder.com/200?text=Chris+Green', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Shakib Al Hasan', 'Bangladesh', 'AR', 'Capped', 1.0, 'https://via.placeholder.com/200?text=Shakib+Al+Hasan', {'matches': 71, 'runs': 1401, 'avg': 23.35, 'wickets': 140}),
+        ('Mehidy Hasan Miraz', 'Bangladesh', 'AR', 'Capped', 1.0, 'https://via.placeholder.com/200?text=Mehidy+Hasan+Miraz', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Wiaan Mulder', 'South Africa', 'AR', 'Capped', 0.75, 'https://via.placeholder.com/200?text=Wiaan+Mulder', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Dwaine Pretorius', 'South Africa', 'AR', 'Capped', 0.75, 'https://via.placeholder.com/200?text=Dwaine+Pretorius', {'matches': 1, 'runs': 0, 'avg': 0, 'wickets': 1}),
+        ('Dasun Shanaka', 'Sri Lanka', 'AR', 'Capped', 0.75, 'https://via.placeholder.com/200?text=Dasun+Shanaka', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Shoriful Islam', 'Bangladesh', 'BOWL', 'Capped', 0.75, 'https://via.placeholder.com/200?text=Shoriful+Islam', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
+        ('Blessing Muzarabani', 'Zimbabwe', 'BOWL', 'Capped', 0.75, 'https://via.placeholder.com/200?text=Blessing+Muzarabani', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
+        ('Matthew Potts', 'England', 'BOWL', 'Capped', 1.5, 'https://via.placeholder.com/200?text=Matthew+Potts', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
+        ('Tanzim Hasan Sakib', 'Bangladesh', 'BOWL', 'Capped', 0.75, 'https://via.placeholder.com/200?text=Tanzim+Hasan+Sakib', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
+        ('Benjamin Sears', 'New Zealand', 'BOWL', 'Capped', 1.0, 'https://via.placeholder.com/200?text=Benjamin+Sears', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
+        ('Tim Southee', 'New Zealand', 'BOWL', 'Capped', 1.5, 'https://via.placeholder.com/200?text=Tim+Southee', {'matches': 44, 'wickets': 43, 'economy': 8.4, 'runs': 64}),
+        ('John Turner', 'England', 'BOWL', 'Capped', 1.5, 'https://via.placeholder.com/200?text=John+Turner', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
+        ('Joshua Brown', 'Australia', 'BAT', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Joshua+Brown', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Oliver Davies', 'Australia', 'BAT', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Oliver+Davies', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Bevan John Jacobs', 'New Zealand', 'BAT', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Bevan+John+Jacobs', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Atharva Kale', 'India', 'BAT', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Atharva+Kale', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Abhishek Nair', 'India', 'BAT', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Abhishek+Nair', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Vishwanath Pratap Singh', 'India', 'BAT', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Vishwanath+Pratap+Singh', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Nasir Lone', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Nasir+Lone', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Brandon McMullen', 'Scotland', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Brandon+McMullen', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('S. Midhun', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=S.+Midhun', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Abid Mushtaq', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Abid+Mushtaq', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Mahesh Pithiya', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Mahesh+Pithiya', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Maramreddy Reddy', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Maramreddy+Reddy', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Atit Sheth', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Atit+Sheth', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Jonty Sidhu', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Jonty+Sidhu', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Mohit Avasthi', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Mohit+Avasthi', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
+        ('Faridoon Dawoodzai', 'Afghanistan', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Faridoon+Dawoodzai', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
+        ('Praful Hinge', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Praful+Hinge', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
+        ('Pankaj Jaswal', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Pankaj+Jaswal', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
+        ('Vijay Kumar', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Vijay+Kumar', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
+        ('Ashok Sharma', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Ashok+Sharma', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
+        ('Mujtaba Yousuf', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Mujtaba+Yousuf', {'matches': 0, 'wickets': 0, 'economy': 0, 'runs': 0}),
+        ('Ashton Agar', 'Australia', 'AR', 'Capped', 1.25, 'https://via.placeholder.com/200?text=Ashton+Agar', {'matches': 5, 'runs': 22, 'avg': 7.33, 'wickets': 4}),
+        ('Roston Chase', 'West Indies', 'AR', 'Capped', 0.75, 'https://via.placeholder.com/200?text=Roston+Chase', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Junior Dala', 'South Africa', 'AR', 'Capped', 0.75, 'https://via.placeholder.com/200?text=Junior+Dala', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Mahedi Hasan', 'Bangladesh', 'AR', 'Capped', 0.75, 'https://via.placeholder.com/200?text=Mahedi+Hasan', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Nangeyalia Kharote', 'Afghanistan', 'AR', 'Capped', 0.75, 'https://via.placeholder.com/200?text=Nangeyalia+Kharote', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Dan Lawrence', 'England', 'AR', 'Capped', 1.0, 'https://via.placeholder.com/200?text=Dan+Lawrence', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('Nathan Smith', 'New Zealand', 'AR', 'Capped', 1.0, 'https://via.placeholder.com/200?text=Nathan+Smith', {'matches': 0, 'runs': 0, 'avg': 0, 'wickets': 0}),
+        ('James Anderson', 'England', 'BOWL', 'Capped', 1.25, 'https://via.placeholder.com/200?text=James+Anderson', {'matches': 1, 'wickets': 0, 'economy': 6.0, 'runs': 0}),
+        ('Kyle Jamieson', 'New Zealand', 'BOWL', 'Capped', 1.5, 'https://via.placeholder.com/200?text=Kyle+Jamieson', {'matches': 9, 'wickets': 11, 'economy': 8.0, 'runs': 12}),
+        ('Ruturaj Gaikwad', 'India', 'BAT', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Ruturaj+Gaikwad', {'matches': 52, 'runs': 1797, 'avg': 39.93, 'wickets': 0}),
+        ('Matheesha Pathirana', 'Sri Lanka', 'BOWL', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Matheesha+Pathirana', {'matches': 18, 'wickets': 32, 'economy': 7.88, 'runs': 1}),
+        ('Shivam Dube', 'India', 'AR', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Shivam+Dube', {'matches': 42, 'runs': 1002, 'avg': 28.63, 'wickets': 4}),
+        ('Ravindra Jadeja', 'India', 'AR', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Ravindra+Jadeja', {'matches': 226, 'runs': 2693, 'avg': 29.27, 'wickets': 152}),
+        ('MS Dhoni', 'India', 'WK', 'Capped', 2.0, 'https://via.placeholder.com/200?text=MS+Dhoni', {'matches': 250, 'runs': 5082, 'avg': 38.79, 'wickets': 0}),
+        ('Axar Patel', 'India', 'AR', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Axar+Patel', {'matches': 87, 'runs': 944, 'avg': 18.88, 'wickets': 84}),
+        ('Kuldeep Yadav', 'India', 'BOWL', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Kuldeep+Yadav', {'matches': 78, 'wickets': 102, 'economy': 8.27, 'runs': 87}),
+        ('Tristan Stubbs', 'South Africa', 'BAT', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Tristan+Stubbs', {'matches': 6, 'runs': 71, 'avg': 14.2, 'wickets': 0}),
+        ('Abhishek Porel', 'India', 'WK', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Abhishek+Porel', {'matches': 5, 'runs': 86, 'avg': 28.67, 'wickets': 0}),
+        ('Rashid Khan', 'Afghanistan', 'BOWL', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Rashid+Khan', {'matches': 109, 'wickets': 139, 'economy': 6.69, 'runs': 421}),
+        ('Shubman Gill', 'India', 'BAT', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Shubman+Gill', {'matches': 36, 'runs': 1376, 'avg': 42.99, 'wickets': 0}),
+        ('Sai Sudharsan', 'India', 'BAT', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Sai+Sudharsan', {'matches': 19, 'runs': 661, 'avg': 41.31, 'wickets': 0}),
+        ('Rahul Tewatia', 'India', 'AR', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Rahul+Tewatia', {'matches': 60, 'runs': 730, 'avg': 20.28, 'wickets': 32}),
+        ('Shahrukh Khan', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Shahrukh+Khan', {'matches': 12, 'runs': 132, 'avg': 16.5, 'wickets': 0}),
+        ('Rinku Singh', 'India', 'BAT', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Rinku+Singh', {'matches': 23, 'runs': 474, 'avg': 59.25, 'wickets': 0}),
+        ('Varun Chakaravarthy', 'India', 'BOWL', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Varun+Chakaravarthy', {'matches': 47, 'wickets': 49, 'economy': 7.3, 'runs': 19}),
+        ('Sunil Narine', 'West Indies', 'AR', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Sunil+Narine', {'matches': 177, 'runs': 1029, 'avg': 16.33, 'wickets': 183}),
+        ('Andre Russell', 'West Indies', 'AR', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Andre+Russell', {'matches': 112, 'runs': 2262, 'avg': 29.12, 'wickets': 99}),
+        ('Harshit Rana', 'India', 'BOWL', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Harshit+Rana', {'matches': 7, 'wickets': 11, 'economy': 9.09, 'runs': 0}),
+        ('Ramandeep Singh', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Ramandeep+Singh', {'matches': 7, 'runs': 125, 'avg': 41.67, 'wickets': 0}),
+        ('Nicholas Pooran', 'West Indies', 'WK', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Nicholas+Pooran', {'matches': 62, 'runs': 1465, 'avg': 36.62, 'wickets': 0}),
+        ('Ravi Bishnoi', 'India', 'BOWL', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Ravi+Bishnoi', {'matches': 50, 'wickets': 53, 'economy': 7.75, 'runs': 43}),
+        ('Mayank Yadav', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Mayank+Yadav', {'matches': 4, 'wickets': 7, 'economy': 6.99, 'runs': 0}),
+        ('Mohsin Khan', 'India', 'BOWL', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Mohsin+Khan', {'matches': 25, 'wickets': 24, 'economy': 9.44, 'runs': 8}),
+        ('Ayush Badoni', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Ayush+Badoni', {'matches': 24, 'runs': 437, 'avg': 29.13, 'wickets': 0}),
+        ('Jasprit Bumrah', 'India', 'BOWL', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Jasprit+Bumrah', {'matches': 133, 'wickets': 165, 'economy': 7.39, 'runs': 83}),
+        ('Suryakumar Yadav', 'India', 'BAT', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Suryakumar+Yadav', {'matches': 139, 'runs': 3597, 'avg': 32.4, 'wickets': 0}),
+        ('Hardik Pandya', 'India', 'AR', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Hardik+Pandya', {'matches': 123, 'runs': 2418, 'avg': 26.57, 'wickets': 53}),
+        ('Rohit Sharma', 'India', 'BAT', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Rohit+Sharma', {'matches': 257, 'runs': 6628, 'avg': 29.84, 'wickets': 15}),
+        ('Tilak Varma', 'India', 'BAT', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Tilak+Varma', {'matches': 32, 'runs': 1005, 'avg': 37.22, 'wickets': 0}),
+        ('Shashank Singh', 'India', 'AR', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Shashank+Singh', {'matches': 14, 'runs': 354, 'avg': 44.25, 'wickets': 0}),
+        ('Prabhsimran Singh', 'India', 'WK', 'Uncapped', 0.3, 'https://via.placeholder.com/200?text=Prabhsimran+Singh', {'matches': 23, 'runs': 664, 'avg': 30.18, 'wickets': 0}),
+        ('Sanju Samson', 'India', 'WK', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Sanju+Samson', {'matches': 152, 'runs': 3876, 'avg': 29.81, 'wickets': 0}),
+        ('Yashasvi Jaiswal', 'India', 'BAT', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Yashasvi+Jaiswal', {'matches': 37, 'runs': 1342, 'avg': 39.47, 'wickets': 0}),
+        ('Riyan Parag', 'India', 'AR', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Riyan+Parag', {'matches': 33, 'runs': 609, 'avg': 25.38, 'wickets': 3}),
+        ('Dhruv Jurel', 'India', 'WK', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Dhruv+Jurel', {'matches': 8, 'runs': 195, 'avg': 48.75, 'wickets': 0}),
+        ('Shimron Hetmyer', 'West Indies', 'BAT', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Shimron+Hetmyer', {'matches': 59, 'runs': 1104, 'avg': 29.84, 'wickets': 0}),
+        ('Sandeep Sharma', 'India', 'BOWL', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Sandeep+Sharma', {'matches': 109, 'wickets': 106, 'economy': 7.81, 'runs': 34}),
+        ('Virat Kohli', 'India', 'BAT', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Virat+Kohli', {'matches': 252, 'runs': 8004, 'avg': 38.67, 'wickets': 4}),
+        ('Rajat Patidar', 'India', 'BAT', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Rajat+Patidar', {'matches': 20, 'runs': 799, 'avg': 47, 'wickets': 0}),
+        ('Yash Dayal', 'India', 'BOWL', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Yash+Dayal', {'matches': 17, 'wickets': 17, 'economy': 9.33, 'runs': 3}),
+        ('Heinrich Klaasen', 'South Africa', 'WK', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Heinrich+Klaasen', {'matches': 28, 'runs': 1047, 'avg': 41.88, 'wickets': 0}),
+        ('Pat Cummins', 'Australia', 'BOWL', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Pat+Cummins', {'matches': 42, 'wickets': 46, 'economy': 9.28, 'runs': 120}),
+        ('Travis Head', 'Australia', 'BAT', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Travis+Head', {'matches': 15, 'runs': 567, 'avg': 43.62, 'wickets': 1}),
+        ('Abhishek Sharma', 'India', 'AR', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Abhishek+Sharma', {'matches': 31, 'runs': 484, 'avg': 17.93, 'wickets': 8}),
+        ('Nitish Kumar Reddy', 'India', 'AR', 'Capped', 2.0, 'https://via.placeholder.com/200?text=Nitish+Kumar+Reddy', {'matches': 13, 'runs': 303, 'avg': 33.67, 'wickets': 3}),
+    ]
+    players = []
+    for name, country, role, capped, base, photo, stats in data:
+        bat = random.randint(70, 99) if role in ['BAT', 'WK'] else random.randint(40, 80)
+        bowl = random.randint(70, 99) if role in ['BOWL', 'AR'] else random.randint(20, 50)
+        field = random.randint(60, 95)
+        players.append({
+            'name': name,
+            'country': country,
+            'role': role,
+            'base_price': base,
+            'bat_skill': bat,
+            'bowl_skill': bowl,
+            'field_skill': field,
+            'photo': photo,
+            'stats': stats
+        })
+    random.shuffle(players)
+    return players
+
+players = load_players()
+
+class Team:
+    def __init__(self, name):
+        self.name = name
+        self.purse = 130.0
+        self.squad = []
+        self.overseas = 0
+        self.points = 0
+        self.nrr = 0.0
+        self.role_needs = {'BAT': 6, 'AR': 4, 'WK': 2, 'BOWL': 6}
+        self.tournament_stats = {'runs': 0, 'wickets': 0, 'matches': 0}
+
+    def update_needs(self):
+        roles = {'BAT': 0, 'AR': 0, 'BOWL': 0, 'WK': 0}
+        for p in self.squad:
+            roles[p['role']] += 1
+        for r in self.role_needs:
+            self.role_needs[r] = max(0, self.role_needs[r] - roles.get(r, 0))
+
+    def interested_in(self, player):
+        if self.role_needs.get(player['role'], 0) > 0 and len(self.squad) < 24:
+            ov_ok = player['country'] == 'India' or self.overseas < 8
+            value = (player['bat_skill'] + player['bowl_skill']) / 2
+            if value > 60 and self.purse > player['base_price'] * 1.2:
+                return ov_ok
+        return False
+
+    def can_buy(self, player, price):
+        if self.purse < price or len(self.squad) >= 25:
+            return False
+        if player['country'] != 'India' and self.overseas >= 8:
+            return False
+        return True
+
+    def buy(self, player, price):
+        self.squad.append(player)
+        self.purse -= price
+        if player['country'] != 'India':
+            self.overseas += 1
+        self.update_needs()
+
+    def update_tournament_stats(self, runs, wickets):
+        self.tournament_stats['runs'] += runs
+        self.tournament_stats['wickets'] += wickets
+        self.tournament_stats['matches'] += 1
+
+# AI teams
+ai_teams = [Team(name) for name in ['CSK', 'MI', 'RCB', 'KKR', 'SRH', 'DC', 'PBKS', 'RR', 'GT', 'LSG']]
+
+# Session state
+if 'phase' not in st.session_state:
+    st.session_state.phase = 'team_select'
+if 'user_team' not in st.session_state:
+    st.session_state.user_team = None
+if 'auction_index' not in st.session_state:
+    st.session_state.auction_index = 0
+if 'current_bid' not in st.session_state:
+    st.session_state.current_bid = 0.0
+if 'current_bidder' not in st.session_state:
+    st.session_state.current_bidder = 'Auctioneer'
+if 'trade_done' not in st.session_state:
+    st.session_state.trade_done = 0
+if 'match_index' not in st.session_state:
+    st.session_state.match_index = 0
+if 'innings' not in st.session_state:
+    st.session_state.innings = None
+if 'bid_time' not in st.session_state:
+    st.session_state.bid_time = 0
+if 'auction_results' not in st.session_state:
+    st.session_state.auction_results = []
+
+# Team selection
+if st.session_state.phase == 'team_select':
+    st.title("Choose Your IPL Team")
+    team_options = ['CSK', 'MI', 'RCB', 'KKR', 'SRH', 'DC', 'PBKS', 'RR', 'GT', 'LSG']
+    selected_team = st.selectbox("Select Team", team_options)
+    if st.button("Start Auction"):
+        st.session_state.user_team = Team(selected_team)
+        st.session_state.phase = 'auction'
+        st.rerun()
+
+# Auction phase
+if st.session_state.phase == 'auction':
+    st.title("IPL Mega Auction")
+    col_main, col_side = st.columns([3,1])
+    with col_side:
+        st.subheader("Auction Results")
+        for result in st.session_state.auction_results:
+            st.write(result)
+        st.subheader("Other Teams")
+        for team in ai_teams:
+            with st.expander(team.name):
+                st.write(f"Purse: {team.purse:.1f} Cr")
+                squad_df = pd.DataFrame(team.squad)
+                if not squad_df.empty:
+                    st.dataframe(squad_df[['name', 'role']])
+    with col_main:
+        if st.session_state.auction_index < len(players):
+            player = players[st.session_state.auction_index]
+            st.markdown(f"<div class='auctioneer'>Auctioneer: Bidding starts for {player['name']} at {player['base_price']} Cr! Going once...</div>", unsafe_allow_html=True)
+            col1, col2 = st.columns(2)
+            with col1:
+                st.image(player['photo'], width=200)
+            with col2:
+                st.write(f"Name: {player['name']}")
+                st.write(f"Country: {player['country']}")
+                st.write(f"Role: {player['role']}")
+                st.write(f"Base Price: {player['base_price']} Cr")
+                st.write(f"Bat: {player['bat_skill']}, Bowl: {player['bowl_skill']}, Field: {player['field_skill']}")
+                st.subheader("Stats")
+                st.json(player['stats'])
+
+            if st.session_state.current_bid == 0.0:
+                st.session_state.current_bid = player['base_price']
+                st.session_state.bid_time = time.time()
+
+            # AI bidding simulation
+            if 'ai_bid_done' not in st.session_state:
+                st.session_state.ai_bid_done = False
+            if not st.session_state.ai_bid_done:
+                time.sleep(1)  # Simulate delay
+                for team in ai_teams:
+                    if team.interested_in(player) and team.can_buy(player, st.session_state.current_bid + 0.1):
+                        max_bid = min(st.session_state.current_bid + random.uniform(0.1, 1.0), player['base_price'] * random.uniform(1.1, 3.0))
+                        max_bid = min(max_bid, team.purse * 0.15)
+                        if max_bid > st.session_state.current_bid:
+                            inc = random.uniform(0.1, min(1.0, max_bid - st.session_state.current_bid))
+                            st.session_state.current_bid += inc
+                            st.session_state.current_bid = round(st.session_state.current_bid, 1)
+                            st.session_state.current_bidder = team.name
+                            st.write(f"{team.name} bids {st.session_state.current_bid:.1f} Cr!")
+                            st.session_state.bid_time = time.time()
+                            break
+                st.session_state.ai_bid_done = True
+                st.rerun()
+
+            if st.session_state.current_bidder == 'Auctioneer':
+                st.write("Current Bid: No bids yet")
+            else:
+                st.write(f"Current Bid: {st.session_state.current_bid:.1f} Cr by {st.session_state.current_bidder}")
+
+            col_bid1, col_bid2, col_bid3, col_pass = st.columns(4)
+            with col_bid1:
+                if st.button("+0.1 Cr", key="bid01"):
+                    new_bid = st.session_state.current_bid + 0.1
+                    if st.session_state.user_team.can_buy(player, new_bid):
+                        st.session_state.current_bid = new_bid
+                        st.session_state.current_bidder = st.session_state.user_team.name
+                        st.session_state.ai_bid_done = False
+                        st.session_state.bid_time = time.time()
+                        st.rerun()
+            with col_bid2:
+                if st.button("+0.5 Cr", key="bid05"):
+                    new_bid = st.session_state.current_bid + 0.5
+                    if st.session_state.user_team.can_buy(player, new_bid):
+                        st.session_state.current_bid = new_bid
+                        st.session_state.current_bidder = st.session_state.user_team.name
+                        st.session_state.ai_bid_done = False
+                        st.session_state.bid_time = time.time()
+                        st.rerun()
+            with col_bid3:
+                if st.button("+1 Cr", key="bid1"):
+                    new_bid = st.session_state.current_bid + 1.0
+                    if st.session_state.user_team.can_buy(player, new_bid):
+                        st.session_state.current_bid = new_bid
+                        st.session_state.current_bidder = st.session_state.user_team.name
+                        st.session_state.ai_bid_done = False
+                        st.session_state.bid_time = time.time()
+                        st.rerun()
+            with col_pass:
+                if st.button("Pass", key="pass"):
+                    if st.session_state.current_bidder == st.session_state.user_team.name:
+                        st.session_state.user_team.buy(player, st.session_state.current_bid)
+                        st.success(f"You bought {player['name']} for {st.session_state.current_bid:.1f} Cr!")
+                        st.session_state.auction_results.append(f"{player['name']} -> {st.session_state.user_team.name} for {st.session_state.current_bid:.1f} Cr")
+                    elif st.session_state.current_bidder != 'Auctioneer':
+                        winner = next(t for t in ai_teams if t.name == st.session_state.current_bidder)
+                        winner.buy(player, st.session_state.current_bid)
+                        st.info(f"Sold to {winner.name} for {st.session_state.current_bid:.1f} Cr!")
+                        st.session_state.auction_results.append(f"{player['name']} -> {winner.name} for {st.session_state.current_bid:.1f} Cr")
+                    else:
+                        st.info("Unsold!")
+                        st.session_state.auction_results.append(f"{player['name']} -> Unsold")
+                    st.session_state.auction_index += 1
+                    st.session_state.current_bid = 0.0
+                    st.session_state.current_bidder = 'Auctioneer'
+                    st.session_state.ai_bid_done = False
+                    st.session_state.bid_time = 0
+                    st.rerun()
+            # Countdown for auto-sell
+            if st.session_state.current_bidder != 'Auctioneer':
+                elapsed = time.time() - st.session_state.bid_time
+                if elapsed > 5:
+                    winner = st.session_state.user_team if st.session_state.current_bidder == st.session_state.user_team.name else next(t for t in ai_teams if t.name == st.session_state.current_bidder)
+                    winner.buy(player, st.session_state.current_bid)
+                    st.success(f"Sold to {winner.name} for {st.session_state.current_bid:.1f} Cr after countdown!")
+                    st.session_state.auction_results.append(f"{player['name']} -> {winner.name} for {st.session_state.current_bid:.1f} Cr")
+                    st.session_state.auction_index += 1
+                    st.session_state.current_bid = 0.0
+                    st.session_state.current_bidder = 'Auctioneer'
+                    st.session_state.ai_bid_done = False
+                    st.session_state.bid_time = 0
+                    st.rerun()
+                else:
+                    remaining = 5 - int(elapsed)
+                    st.write(f"Going twice... Sold in {remaining} seconds!")
+                    time.sleep(1)
+                    st.rerun()
+        else:
+            st.success("Auction Complete!")
+            if st.button("Proceed to Trades"):
+                st.session_state.phase = 'trade'
+                st.rerun()
+
+# Trade phase
+if st.session_state.phase == 'trade':
+    st.title("Trade Phase (Up to 3 Trades)")
+    if st.session_state.trade_done < 3:
+        st.write("Your Squad:")
+        user_squad = pd.DataFrame(st.session_state.user_team.squad)
+        st.dataframe(user_squad[['name', 'role', 'bat_skill', 'bowl_skill', 'field_skill']])
+        out_player = st.selectbox("Select player to trade out", user_squad['name'])
+
+        ai_team_name = st.selectbox("Select AI team", [t.name for t in ai_teams])
+        ai_team = next(t for t in ai_teams if t.name == ai_team_name)
+        ai_squad = pd.DataFrame(ai_team.squad)
+        st.write(f"{ai_team_name} Squad:")
+        st.dataframe(ai_squad[['name', 'role', 'bat_skill', 'bowl_skill', 'field_skill']])
+        in_player = st.selectbox("Select player to trade in", ai_squad['name'])
+
+        if st.button("Propose Trade"):
+            out_p = next(p for p in st.session_state.user_team.squad if p['name'] == out_player)
+            in_p = next(p for p in ai_team.squad if p['name'] == in_player)
+            out_val = out_p['bat_skill'] + out_p['bowl_skill']
+            in_val = in_p['bat_skill'] + in_p['bowl_skill']
+            if random.random() < 0.5 or out_val > in_val:
+                st.session_state.user_team.squad.remove(out_p)
+                ai_team.squad.remove(in_p)
+                st.session_state.user_team.squad.append(in_p)
+                ai_team.squad.append(out_p)
+                st.session_state.user_team.update_needs()
+                ai_team.update_needs()
+                st.success("Trade Accepted!")
+                st.session_state.trade_done += 1
+            else:
+                st.error("Trade Rejected!")
+            st.rerun()
+    else:
+        st.success("Trades Complete!")
+        if st.button("Proceed to Season"):
+            st.session_state.phase = 'season'
+            st.rerun()
+
+# Season and Match phase
+if st.session_state.phase == 'season':
+    st.title("IPL Season")
+    opponents = ai_teams.copy()
+    random.shuffle(opponents)
+    if st.session_state.match_index < len(opponents):
+        opp = opponents[st.session_state.match_index]
+        st.write(f"Match vs {opp.name}")
+        if st.button("Start Match"):
+            st.session_state.innings = {'score': 0, 'wickets': 0, 'overs': 0.0, 'target': 0, 'bat_team': st.session_state.user_team, 'bowl_team': opp, 'ball_index': 0, 'rain': False}
+            st.rerun()
+    else:
+        st.success("Season Complete! Calculate standings.")
+        all_teams = ai_teams + [st.session_state.user_team]
+        standings = sorted(all_teams, key=lambda t: -t.points)
+        st.write("Standings:")
+        for t in standings:
+            st.write(f"{t.name}: {t.points} pts, NRR {t.nrr:.2f}")
+        if st.session_state.user_team in standings[:4]:
+            st.write("You made playoffs!")
+
+# Ball-by-ball match sim
+if 'innings' in st.session_state and st.session_state.innings:
+    innings = st.session_state.innings
+    if innings['ball_index'] < 120 and innings['wickets'] < 10:
+        if innings['bat_team'] == st.session_state.user_team:
+            style = st.selectbox("Batting Style", ['Defensive', 'Normal', 'Aggressive'])
+            wicket_prob = 0.05 if style == 'Defensive' else 0.1 if style == 'Normal' else 0.15
+        else:
+            style = st.selectbox("Bowling Type", ['Pace', 'Spin', 'Swing'])
+            wicket_prob = 0.12 if style == 'Swing' else 0.1 if style == 'Spin' else 0.08
+
+        if st.button("Bowl/Bat Ball"):
+            run = random.choice([0, 1, 2, 3, 4, 6])
+            wicket = random.random() < wicket_prob
+            if wicket:
+                innings['wickets'] += 1
+                st.write("Wicket!")
+            else:
+                innings['score'] += run
+                st.write(f"Runs: {run}")
+            innings['ball_index'] += 1
+            innings['overs'] = innings['ball_index'] / 6
+            if random.random() < 0.05 and innings['ball_index'] > 60:
+                innings['rain'] = True
+                overs_left = 20 - innings['overs']
+                wk_lost = innings['wickets']
+                resource = dls_table[wk_lost][int(overs_left)]
+                full = dls_table[0][20]
+                if innings['target'] > 0:
+                    innings['target'] = int(innings['target'] * (resource / full) + 1)
+                    st.write(f"Rain! Target adjusted to {innings['target']}")
+            st.write(f"Score: {innings['score']}/{innings['wickets']} in {innings['overs']:.1f} overs")
+            innings['bat_team'].update_tournament_stats(run if not wicket else 0, 1 if wicket else 0)
+            st.rerun()
+    else:
+        if innings['target'] == 0:
+            innings['target'] = innings['score'] + 1
+            st.session_state.innings = {'score': 0, 'wickets': 0, 'overs': 0.0, 'target': innings['target'], 'bat_team': innings['bowl_team'], 'bowl_team': innings['bat_team'], 'ball_index': 0, 'rain': False}
+            st.write("Second Innings Start")
+            st.rerun()
+        else:
+            user = st.session_state.user_team
+            opp = innings['bowl_team'] if innings['bat_team'] == user else innings['bat_team']
+            if innings['score'] > innings['target'] - 1:
+                winner = innings['bat_team']
+            elif innings['score'] < innings['target'] - 1:
+                winner = innings['bowl_team']
+            else:
+                winner = None
+            nrr = (innings['score'] / innings['overs'] - (innings['target'] - 1) / 20) if winner else 0
+            if winner == user:
+                user.points += 2
+                user.nrr += nrr
+                opp.nrr -= nrr
+            elif winner == opp:
+                opp.points += 2
+                opp.nrr += nrr
+                user.nrr -= nrr
+            else:
+                user.points += 1
+                opp.points += 1
+            st.write(f"Match Result: {winner.name if winner else 'Tie'} wins!")
+            st.session_state.match_index += 1
+            st.session_state.innings = None
+            st.rerun()
+
+# Sidebar
+st.sidebar.title("Your Team")
+if st.session_state.user_team:
+    squad_df = pd.DataFrame(st.session_state.user_team.squad)
+    if not squad_df.empty:
+        st.sidebar.dataframe(squad_df[['name', 'role']])
+    st.sidebar.write(f"Purse: {st.session_state.user_team.purse:.2f} Cr")
+    st.sidebar.write(f"Overseas: {st.session_state.user_team.overseas}/8")
+    st.sidebar.write(f"Points: {st.session_state.user_team.points}, NRR: {st.session_state.user_team.nrr:.2f}")
+    st.sidebar.subheader("Tournament Stats")
+    st.sidebar.json(st.session_state.user_team.tournament_stats)
