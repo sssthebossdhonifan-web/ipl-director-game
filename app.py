@@ -416,3 +416,111 @@ if 'auction_results' not in st.session_state:
     st.session_state.auction_results = []
 if 'ai_bid_done' not in st.session_state:
     st.session_state.ai_bid_done = False
+# Part 2: Auction Phase (with active bidding from all teams, user can bid, pass, or let AI handle)
+
+# Team selection
+if st.session_state.phase == 'team_select':
+    st.title("Choose Your IPL Team")
+    team_options = ['CSK', 'MI', 'RCB', 'KKR', 'SRH', 'DC', 'PBKS', 'RR', 'GT', 'LSG']
+    selected_team = st.selectbox("Select Team", team_options)
+    if st.button("Start Auction"):
+        st.session_state.user_team = Team(selected_team)
+        st.session_state.phase = 'auction'
+        st.rerun()
+
+# Auction phase
+if st.session_state.phase == 'auction':
+    st.title("IPL Mega Auction")
+    col_main, col_side = st.columns([3,1])
+    with col_side:
+        st.subheader("Auction Results")
+        for result in st.session_state.auction_results:
+            st.write(result)
+        st.subheader("Other Teams")
+        for team in ai_teams:
+            with st.expander(team.name):
+                st.write(f"Purse: {team.purse:.1f} Cr")
+                squad_df = pd.DataFrame(team.squad)
+                if not squad_df.empty:
+                    st.dataframe(squad_df[['name', 'role']])
+    with col_main:
+        if st.session_state.auction_index < len(players):
+            player = players[st.session_state.auction_index]
+            st.markdown(f"<div class='auctioneer'>Auctioneer: Bidding starts for {player['name']} at {player['base_price']} Cr! Going once...</div>", unsafe_allow_html=True)
+            col1, col2 = st.columns(2)
+            with col1:
+                st.image(player['photo'], width=200)
+            with col2:
+                st.write(f"Name: {player['name']}")
+                st.write(f"Country: {player['country']}")
+                st.write(f"Role: {player['role']}")
+                st.write(f"Base Price: {player['base_price']} Cr")
+                st.write(f"Bat: {player['bat_skill']}, Bowl: {player['bowl_skill']}, Field: {player['field_skill']}")
+                st.subheader("Stats")
+                st.json(player['stats'])
+
+            if st.session_state.current_bid == 0.0:
+                st.session_state.current_bid = player['base_price']
+                st.session_state.bid_time = time.time()
+                st.session_state.ai_bid_done = False
+
+            # Display current bid status
+            st.write(f"Current Bid: {st.session_state.current_bid:.1f} Cr by {st.session_state.current_bidder}")
+
+            # AI bidding simulation
+            if not st.session_state.ai_bid_done:
+                bidding_teams = [t for t in ai_teams if t.interested_in(player) and t.can_buy(player, st.session_state.current_bid + 0.1)]
+                if bidding_teams:
+                    bidding_team = random.choice(bidding_teams)
+                    max_bid = min(st.session_state.current_bid + random.uniform(0.1, 1.0), player['base_price'] * random.uniform(1.1, 3.0))
+                    max_bid = min(max_bid, bidding_team.purse * 0.15)
+                    if max_bid > st.session_state.current_bid:
+                        inc = random.uniform(0.1, min(1.0, max_bid - st.session_state.current_bid))
+                        st.session_state.current_bid += inc
+                        st.session_state.current_bid = round(st.session_state.current_bid, 1)
+                        st.session_state.current_bidder = bidding_team.name
+                        st.write(f"{bidding_team.name} bids {st.session_state.current_bid:.1f} Cr!")
+                        st.session_state.bid_time = time.time()
+                        st.rerun()
+                else:
+                    st.session_state.ai_bid_done = True
+
+            # User bidding options
+            col_bid1, col_bid2, col_pass = st.columns(3)
+            with col_bid1:
+                if st.button(f"Bid {st.session_state.current_bid + 0.1:.1f} Cr") and st.session_state.user_team.can_buy(player, st.session_state.current_bid + 0.1):
+                    st.session_state.current_bid += 0.1
+                    st.session_state.current_bidder = st.session_state.user_team.name
+                    st.session_state.ai_bid_done = False  # Reset for AI to respond
+                    st.rerun()
+            with col_bid2:
+                if st.button(f"Bid {st.session_state.current_bid + 0.5:.1f} Cr") and st.session_state.user_team.can_buy(player, st.session_state.current_bid + 0.5):
+                    st.session_state.current_bid += 0.5
+                    st.session_state.current_bidder = st.session_state.user_team.name
+                    st.session_state.ai_bid_done = False
+                    st.rerun()
+            with col_pass:
+                if st.button("Pass"):
+                    st.session_state.ai_bid_done = True  # Let AI continue or end
+
+            # Timer for auction end
+            if time.time() - st.session_state.bid_time > 5 and st.session_state.ai_bid_done:  # 5 seconds no bid
+                if st.session_state.current_bidder != 'Auctioneer':
+                    winner = next((t for t in ai_teams + [st.session_state.user_team] if t.name == st.session_state.current_bidder), None)
+                    if winner:
+                        winner.buy(player, st.session_state.current_bid)
+                        result = f"{player['name']} sold to {winner.name} for {st.session_state.current_bid:.1f} Cr!"
+                        st.session_state.auction_results.append(result)
+                        st.write(result)
+                else:
+                    st.write(f"{player['name']} unsold!")
+                st.session_state.auction_index += 1
+                st.session_state.current_bid = 0.0
+                st.session_state.current_bidder = 'Auctioneer'
+                st.session_state.ai_bid_done = False
+                st.rerun()
+        else:
+            st.success("Auction Complete! Proceed to Trades.")
+            if st.button("Start Trades"):
+                st.session_state.phase = 'trade'
+                st.rerun()
