@@ -362,7 +362,7 @@ class Team:
             self.role_needs[r] = max(0, self.role_needs[r] - roles.get(r, 0))
 
     def interested_in(self, player):
-        if self.role_needs.get(player['role'], 0) > 0 and len(self.squad) < 24:
+        if self.role_needs.get(player['role'], 0) > 0 and len(self.squad) < 20:
             ov_ok = player['country'] == 'India' or self.overseas < 8
             value = (player['bat_skill'] + player['bowl_skill']) / 2
             if value > 60 and self.purse > player['base_price'] * 1.2:
@@ -370,7 +370,7 @@ class Team:
         return False
 
     def can_buy(self, player, price):
-        if self.purse < price or len(self.squad) >= 25:
+        if self.purse < price or len(self.squad) >= 20:
             return False
         if player['country'] != 'India' and self.overseas >= 8:
             return False
@@ -424,7 +424,7 @@ if st.session_state.phase == 'team_select':
         st.rerun()
 
 # Auction phase
-if st.session_state.phase == 'auction':
+if st.session_state.phase = 'auction':
     st.title("IPL Mega Auction")
     col_main, col_side = st.columns([3,1])
     with col_side:
@@ -463,139 +463,20 @@ if st.session_state.phase == 'auction':
                 st.session_state.ai_bid_done = False
             if not st.session_state.ai_bid_done:
                 time.sleep(1)  # Simulate delay
-                for team in ai_teams:
-                    if team.interested_in(player) and team.can_buy(player, st.session_state.current_bid + 0.1):
+                for _ in range(random.randint(1, 3)):  # Allow 1-3 AI bids per turn for activity
+                    bidding_teams = [t for t in ai_teams if t.interested_in(player) and t.can_buy(player, st.session_state.current_bid + 0.1)]
+                    if bidding_teams:
+                        bidding_team = random.choice(bidding_teams)
                         max_bid = min(st.session_state.current_bid + random.uniform(0.1, 1.0), player['base_price'] * random.uniform(1.1, 3.0))
-                        max_bid = min(max_bid, team.purse * 0.15)
+                        max_bid = min(max_bid, bidding_team.purse * 0.15)
                         if max_bid > st.session_state.current_bid:
                             inc = random.uniform(0.1, min(1.0, max_bid - st.session_state.current_bid))
                             st.session_state.current_bid += inc
                             st.session_state.current_bid = round(st.session_state.current_bid, 1)
-                            st.session_state.current_bidder = team.name
-                            st.write(f"{team.name} bids {st.session_state.current_bid:.1f} Cr!")
-                            st.session_state.bid_time = time.time()
-                            break
-                st.session_state.ai_bid_done = True
-                st.rerun()
-
-            if st.session_state.current_bidder == 'Auctioneer':
-                st.write("Current Bid: No bids yet")
-            else:
-                st.write(f"Current Bid: {st.session_state.current_bid:.1f} Cr by {st.session_state.current_bidder}")
-
-            col_bid1, col_bid2, col_bid3, col_pass = st.columns(4)
-            with col_bid1:
-                if st.button("+0.1 Cr", key="bid01"):
-                    new_bid = st.session_state.current_bid + 0.1
-                    if st.session_state.user_team.can_buy(player, new_bid):
-                        st.session_state.current_bid = new_bid
-                        st.session_state.current_bidder = st.session_state.user_team.name
-                        st.session_state.ai_bid_done = False
-                        st.session_state.bid_time = time.time()
-                        st.rerun()
-            with col_bid2:
-                if st.button("+0.5 Cr", key="bid05"):
-                    new_bid = st.session_state.current_bid + 0.5
-                    if st.session_state.user_team.can_buy(player, new_bid):
-                        st.session_state.current_bid = new_bid
-                        st.session_state.current_bidder = st.session_state.user_team.name
-                        st.session_state.ai_bid_done = False
-                        st.session_state.bid_time = time.time()
-                        st.rerun()
-            with col_bid3:
-                if st.button("+1 Cr", key="bid1"):
-                    new_bid = st.session_state.current_bid + 1.0
-                    if st.session_state.user_team.can_buy(player, new_bid):
-                        st.session_state.current_bid = new_bid
-                        st.session_state.current_bidder = st.session_state.user_team.name
-                        st.session_state.ai_bid_done = False
-                        st.session_state.bid_time = time.time()
-                        st.rerun()
-            with col_pass:
-                if st.button("Pass", key="pass"):
-                    if st.session_state.current_bidder == st.session_state.user_team.name:
-                        st.session_state.user_team.buy(player, st.session_state.current_bid)
-                        st.success(f"You bought {player['name']} for {st.session_state.current_bid:.1f} Cr!")
-                        st.session_state.auction_results.append(f"{player['name']} -> {st.session_state.user_team.name} for {st.session_state.current_bid:.1f} Cr")
-                    elif st.session_state.current_bidder != 'Auctioneer':
-                        winner = next(t for t in ai_teams if t.name == st.session_state.current_bidder)
-                        winner.buy(player, st.session_state.current_bid)
-                        st.info(f"Sold to {winner.name} for {st.session_state.current_bid:.1f} Cr!")
-                        st.session_state.auction_results.append(f"{player['name']} -> {winner.name} for {st.session_state.current_bid:.1f} Cr")
-                    else:
-                        st.info("Unsold!")
-                        st.session_state.auction_results.append(f"{player['name']} -> Unsold")
-                    st.session_state.auction_index += 1
-                    st.session_state.current_bid = 0.0
-                    st.session_state.current_bidder = 'Auctioneer'
-                    st.session_state.ai_bid_done = False
-                    st.session_state.bid_time = 0
-                    st.rerun()
-            # Countdown for auto-sell
-            if st.session_state.current_bidder != 'Auctioneer':
-                elapsed = time.time() - st.session_state.bid_time
-                if elapsed > 5:
-                    winner = st.session_state.user_team if st.session_state.current_bidder == st.session_state.user_team.name else next(t for t in ai_teams if t.name == st.session_state.current_bidder)
-                    winner.buy(player, st.session_state.current_bid)
-                    st.success(f"Sold to {winner.name} for {st.session_state.current_bid:.1f} Cr after countdown!")
-                    st.session_state.auction_results.append(f"{player['name']} -> {winner.name} for {st.session_state.current_bid:.1f} Cr")
-                    st.session_state.auction_index += 1
-                    st.session_state.current_bid = 0.0
-                    st.session_state.current_bidder = 'Auctioneer'
-                    st.session_state.ai_bid_done = False
-                    st.session_state.bid_time = 0
-                    st.rerun()
-                else:
-                    remaining = 5 - int(elapsed)
-                    st.write(f"Going twice... Sold in {remaining} seconds!")
-                    time.sleep(1)
-                    st.rerun()
-        else:
-            st.success("Auction Complete!")
-            if st.button("Proceed to Trades"):
-                st.session_state.phase = 'trade'
-                st.rerun()
-
-# Trade phase
-if st.session_state.phase == 'trade':
-    st.title("Trade Phase (Up to 3 Trades)")
-    if st.session_state.trade_done < 3:
-        st.write("Your Squad:")
-        user_squad = pd.DataFrame(st.session_state.user_team.squad)
-        st.dataframe(user_squad[['name', 'role', 'bat_skill', 'bowl_skill', 'field_skill']])
-        out_player = st.selectbox("Select player to trade out", user_squad['name'])
-
-        ai_team_name = st.selectbox("Select AI team", [t.name for t in ai_teams])
-        ai_team = next(t for t in ai_teams if t.name == ai_team_name)
-        ai_squad = pd.DataFrame(ai_team.squad)
-        st.write(f"{ai_team_name} Squad:")
-        st.dataframe(ai_squad[['name', 'role', 'bat_skill', 'bowl_skill', 'field_skill']])
-        in_player = st.selectbox("Select player to trade in", ai_squad['name'])
-
-        if st.button("Propose Trade"):
-            out_p = next(p for p in st.session_state.user_team.squad if p['name'] == out_player)
-            in_p = next(p for p in ai_team.squad if p['name'] == in_player)
-            out_val = out_p['bat_skill'] + out_p['bowl_skill']
-            in_val = in_p['bat_skill'] + in_p['bowl_skill']
-            if random.random() < 0.5 or out_val > in_val:
-                st.session_state.user_team.squad.remove(out_p)
-                ai_team.squad.remove(in_p)
-                st.session_state.user_team.squad.append(in_p)
-                ai_team.squad.append(out_p)
-                st.session_state.user_team.update_needs()
-                ai_team.update_needs()
-                st.success("Trade Accepted!")
-                st.session_state.trade_done += 1
-            else:
-                st.error("Trade Rejected!")
-            st.rerun()
-    else:
-        st.success("Trades Complete!")
-        if st.button("Proceed to Season"):
-            st.session_state.phase = 'season'
-            st.rerun()
-
-# Season and Match phase
+                            st.session_state.current_bidder = bidding_team.name
+                            st.write(f"{bidding_team.name} bids {st.session_state.current_bid:.1f} Cr!")
+                            st.session_state.bid_time = time.time
+                            # Season and Match phase
 if st.session_state.phase == 'season':
     st.title("IPL Season")
     opponents = ai_teams.copy()
@@ -604,19 +485,19 @@ if st.session_state.phase == 'season':
         opp = opponents[st.session_state.match_index]
         st.write(f"Match vs {opp.name}")
         if st.button("Start Match"):
-            st.session_state.innings = {'score': 0, 'wickets': 0, 'overs': 0.0, 'target': 0, 'bat_team': st.session_state.user_team, 'bowl_team': opp, 'ball_index': 0, 'rain': False}
+            st.session_state.innings = {'score': 0, 'wickets': 0, 'overs': 0.0, 'target': 0, 'bat_team': st.session_state.user_team, 'bowl_team': opp, 'ball_index': 0, 'rain': False, 'impact_sub': False}
             st.rerun()
     else:
         st.success("Season Complete! Calculate standings.")
         all_teams = ai_teams + [st.session_state.user_team]
-        standings = sorted(all_teams, key=lambda t: -t.points)
+        standings = sorted(all_teams, key=lambda t: (-t.points, -t.nrr))
         st.write("Standings:")
         for t in standings:
             st.write(f"{t.name}: {t.points} pts, NRR {t.nrr:.2f}")
         if st.session_state.user_team in standings[:4]:
             st.write("You made playoffs!")
 
-# Ball-by-ball match sim
+# Ball-by-ball match sim with impact player
 if 'innings' in st.session_state and st.session_state.innings:
     innings = st.session_state.innings
     if innings['ball_index'] < 120 and innings['wickets'] < 10:
@@ -626,6 +507,16 @@ if 'innings' in st.session_state and st.session_state.innings:
         else:
             style = st.selectbox("Bowling Type", ['Pace', 'Spin', 'Swing'])
             wicket_prob = 0.12 if style == 'Swing' else 0.1 if style == 'Spin' else 0.08
+
+        if innings['ball_index'] == 60 and not innings['impact_sub']:  # After 10 overs, allow impact sub
+            st.write("Impact Player Substitution Available!")
+            sub_options = [p['name'] for p in innings['bat_team'].squad if p['role'] == 'AR' or p['role'] == 'BOWL']  # Example: sub AR or Bowl
+            sub_player = st.selectbox("Select Impact Player to Substitute In", sub_options)
+            if st.button("Substitute Impact Player"):
+                # Simulate sub: boost skills for simplicity
+                innings['impact_sub'] = True
+                wicket_prob -= 0.02  # Boost defense
+                st.write(f"Impact Player {sub_player} substituted! Boost applied.")
 
         if st.button("Bowl/Bat Ball"):
             run = random.choice([0, 1, 2, 3, 4, 6])
@@ -637,7 +528,7 @@ if 'innings' in st.session_state and st.session_state.innings:
                 innings['score'] += run
                 st.write(f"Runs: {run}")
             innings['ball_index'] += 1
-            innings['overs'] = innings['ball_index'] / 6
+            innings['overs'] = innings['ball_index'] // 6 + (innings['ball_index'] % 6) / 10
             if random.random() < 0.05 and innings['ball_index'] > 60:
                 innings['rain'] = True
                 overs_left = 20 - innings['overs']
@@ -653,7 +544,7 @@ if 'innings' in st.session_state and st.session_state.innings:
     else:
         if innings['target'] == 0:
             innings['target'] = innings['score'] + 1
-            st.session_state.innings = {'score': 0, 'wickets': 0, 'overs': 0.0, 'target': innings['target'], 'bat_team': innings['bowl_team'], 'bowl_team': innings['bat_team'], 'ball_index': 0, 'rain': False}
+            st.session_state.innings = {'score': 0, 'wickets': 0, 'overs': 0.0, 'target': innings['target'], 'bat_team': innings['bowl_team'], 'bowl_team': innings['bat_team'], 'ball_index': 0, 'rain': False, 'impact_sub': False}
             st.write("Second Innings Start")
             st.rerun()
         else:
@@ -665,7 +556,11 @@ if 'innings' in st.session_state and st.session_state.innings:
                 winner = innings['bowl_team']
             else:
                 winner = None
-            nrr = (innings['score'] / innings['overs'] - (innings['target'] - 1) / 20) if winner else 0
+            runs_scored = innings['score']
+            overs_faced = innings['overs'] if innings['overs'] > 0 else 20
+            runs_conceded = innings['target'] - 1
+            overs_bowled = 20 if innings['wickets'] == 10 else innings['overs']
+            nrr = (runs_scored / overs_faced) - (runs_conceded / overs_bowled) if winner else 0
             if winner == user:
                 user.points += 2
                 user.nrr += nrr
