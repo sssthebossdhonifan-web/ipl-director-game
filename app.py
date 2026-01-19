@@ -424,7 +424,7 @@ if st.session_state.phase == 'team_select':
         st.rerun()
 
 # Auction phase
-if st.session_state.phase = 'auction':
+if st.session_state.phase == 'auction':
     st.title("IPL Mega Auction")
     col_main, col_side = st.columns([3,1])
     with col_side:
@@ -588,3 +588,4 @@ if st.session_state.user_team:
     st.sidebar.write(f"Points: {st.session_state.user_team.points}, NRR: {st.session_state.user_team.nrr:.2f}")
     st.sidebar.subheader("Tournament Stats")
     st.sidebar.json(st.session_state.user_team.tournament_stats)
+
