@@ -463,58 +463,56 @@ if st.session_state.phase == 'auction':
                 st.session_state.current_bid = player['base_price']
                 st.session_state.bid_time = time.time()
                 st.session_state.ai_bid_done = False
+             if 'user_passed' not in st.session_state:
+                 st.session_state.user_passed = False
 
-            # Display current bid status
-            st.write(f"Current Bid: {st.session_state.current_bid:.1f} Cr by {st.session_state.current_bidder}")
+           # Display current bid status
+st.write(f"Current Bid: {st.session_state.current_bid:.1f} Cr by {st.session_state.current_bidder}")
 
-            # AI bidding simulation
-            if not st.session_state.ai_bid_done:
-                bidding_teams = [t for t in ai_teams if t.interested_in(player) and t.can_buy(player, st.session_state.current_bid + 0.1)]
-                if bidding_teams:
-                    bidding_team = random.choice(bidding_teams)
-                    max_bid = min(st.session_state.current_bid + random.uniform(0.1, 1.0), player['base_price'] * random.uniform(1.1, 3.0))
-                    max_bid = min(max_bid, bidding_team.purse * 0.15)
-                    if max_bid > st.session_state.current_bid:
-                        inc = random.uniform(0.1, min(1.0, max_bid - st.session_state.current_bid))
-                        st.session_state.current_bid += inc
-                        st.session_state.current_bid = round(st.session_state.current_bid, 1)
-                        st.session_state.current_bidder = bidding_team.name
-                        st.write(f"{bidding_team.name} bids {st.session_state.current_bid:.1f} Cr!")
-                        st.session_state.bid_time = time.time()
-                        st.rerun()
-                else:
-                    st.session_state.ai_bid_done = True
+# AI bidding simulation (unchanged)
+if not st.session_state.ai_bid_done:
+    bidding_teams = [t for t in ai_teams if t.interested_in(player) and t.can_buy(player, st.session_state.current_bid + 0.1)]
+    if bidding_teams:
+        bidding_team = random.choice(bidding_teams)
+        max_bid = min(st.session_state.current_bid + random.uniform(0.1, 1.0), player['base_price'] * random.uniform(1.1, 3.0))
+        max_bid = min(max_bid, bidding_team.purse * 0.15)
+        if max_bid > st.session_state.current_bid:
+            inc = random.uniform(0.1, min(1.0, max_bid - st.session_state.current_bid))
+            st.session_state.current_bid += inc
+            st.session_state.current_bid = round(st.session_state.current_bid, 1)
+            st.session_state.current_bidder = bidding_team.name
+            st.write(f"{bidding_team.name} bids {st.session_state.current_bid:.1f} Cr!")
+            st.session_state.bid_time = time.time()
+            st.rerun()
+    else:
+        st.session_state.ai_bid_done = True
 
-            # Updated Bidding Options with Fixed Pass Button
+# User bidding options only if not passed
+if not st.session_state.user_passed:
+    col_bid1, col_bid2, col_pass = st.columns(3)
+    with col_bid1:
+        if st.button(f"Bid {st.session_state.current_bid + 0.1:.1f} Cr") and st.session_state.user_team.can_buy(player, st.session_state.current_bid + 0.1):
+            st.session_state.current_bid += 0.1
+            st.session_state.current_bidder = st.session_state.user_team.name
+            st.session_state.ai_bid_done = False  # Reset for AI to respond
+            st.rerun()
+    with col_bid2:
+        if st.button(f"Bid {st.session_state.current_bid + 0.5:.1f} Cr") and st.session_state.user_team.can_buy(player, st.session_state.current_bid + 0.5):
+            st.session_state.current_bid += 0.5
+            st.session_state.current_bidder = st.session_state.user_team.name
+            st.session_state.ai_bid_done = False
+            st.rerun()
+    with col_pass:
+        if st.button("Pass"):
+            # Pass logic: User opts out, but AI can continue bidding
+            st.session_state.user_passed = True
+            st.write(f"{st.session_state.user_team.name} has passed on {player['name']}. AI teams may continue bidding.")
+            st.session_state.ai_bid_done = False  # Allow AI to bid if interested
+            st.rerun()
+else:
+    st.write("You have passed on this player. Waiting for AI bids or auction end.")
 
-# Updated Bidding Options with Fixed Pass Button to Skip Player
-
-# User bidding options
-col_bid1, col_bid2, col_pass = st.columns(3)
-with col_bid1:
-    if st.button(f"Bid {st.session_state.current_bid + 0.1:.1f} Cr") and st.session_state.user_team.can_buy(player, st.session_state.current_bid + 0.1):
-        st.session_state.current_bid += 0.1
-        st.session_state.current_bidder = st.session_state.user_team.name
-        st.session_state.ai_bid_done = False  # Reset for AI to respond
-        st.rerun()
-with col_bid2:
-    if st.button(f"Bid {st.session_state.current_bid + 0.5:.1f} Cr") and st.session_state.user_team.can_buy(player, st.session_state.current_bid + 0.5):
-        st.session_state.current_bid += 0.5
-        st.session_state.current_bidder = st.session_state.user_team.name
-        st.session_state.ai_bid_done = False
-        st.rerun()
-with col_pass:
-    if st.button("Pass"):
-        # Updated Pass logic: Skip the current player entirely (mark as unsold and move to next)
-        st.write(f"{st.session_state.user_team.name} passes on {player['name']}. Moving to next player.")
-        st.session_state.auction_results.append(f"{player['name']} unsold (user passed).")
-        st.session_state.auction_index += 1
-        st.session_state.current_bid = 0.0
-        st.session_state.current_bidder = 'Auctioneer'
-        st.session_state.ai_bid_done = False
-        st.rerun()
-
-# Timer for auction end (unchanged, but ensure it checks if no bids)
+# Timer for auction end (unchanged)
 if time.time() - st.session_state.bid_time > 5 and st.session_state.ai_bid_done:  # 5 seconds no bid
     if st.session_state.current_bidder != 'Auctioneer':
         winner = next((t for t in ai_teams + [st.session_state.user_team] if t.name == st.session_state.current_bidder), None)
@@ -525,10 +523,12 @@ if time.time() - st.session_state.bid_time > 5 and st.session_state.ai_bid_done:
             st.write(result)
     else:
         st.write(f"{player['name']} unsold!")
+        st.session_state.auction_results.append(f"{player['name']} unsold.")
     st.session_state.auction_index += 1
     st.session_state.current_bid = 0.0
     st.session_state.current_bidder = 'Auctioneer'
     st.session_state.ai_bid_done = False
+    st.session_state.user_passed = False  # Reset for next player
     st.rerun()
 # Timer for auction end (unchanged, but ensure it checks if no bids)
 if time.time() - st.session_state.bid_time > 5 and st.session_state.ai_bid_done:  # 5 seconds no bid
@@ -702,6 +702,7 @@ if st.session_state.user_team:
     st.sidebar.write(f"Points: {st.session_state.user_team.points}, NRR: {st.session_state.user_team.nrr:.2f}")
     st.sidebar.subheader("Tournament Stats")
     st.sidebar.json(st.session_state.user_team.tournament_stats)
+
 
 
 
