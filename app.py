@@ -430,6 +430,8 @@ if st.session_state.phase == 'team_select':
 
 # Corrected Auction Phase Structure to Fix NameError (player not defined)
 
+# Fully Corrected Auction Phase to Prevent NameError (All Logic Inside the Index Check)
+
 # Auction phase
 if st.session_state.phase == 'auction':
     st.title("IPL Mega Auction")
@@ -470,7 +472,7 @@ if st.session_state.phase == 'auction':
             # Display current bid status
             st.write(f"Current Bid: {st.session_state.current_bid:.1f} Cr by {st.session_state.current_bidder}")
 
-            # AI bidding simulation
+            # AI bidding simulation (now safely inside, after player is defined)
             if not st.session_state.ai_bid_done:
                 bidding_teams = [t for t in ai_teams if t.interested_in(player) and t.can_buy(player, st.session_state.current_bid + 0.1)]
                 if bidding_teams:
@@ -487,6 +489,15 @@ if st.session_state.phase == 'auction':
                         st.rerun()
                 else:
                     st.session_state.ai_bid_done = True
+                    if st.session_state.current_bidder == 'Auctioneer':
+                        # No interest from anyone, unsold immediately
+                        st.write(f"{player['name']} unsold! No interest.")
+                        st.session_state.auction_results.append(f"{player['name']} unsold (no interest).")
+                        st.session_state.auction_index += 1
+                        st.session_state.current_bid = 0.0
+                        st.session_state.current_bidder = 'Auctioneer'
+                        st.session_state.user_passed = False
+                        st.rerun()
 
             # User bidding options only if not passed
             if not st.session_state.user_passed:
@@ -687,6 +698,7 @@ if st.session_state.user_team:
     st.sidebar.write(f"Points: {st.session_state.user_team.points}, NRR: {st.session_state.user_team.nrr:.2f}")
     st.sidebar.subheader("Tournament Stats")
     st.sidebar.json(st.session_state.user_team.tournament_stats)
+
 
 
 
