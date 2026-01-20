@@ -472,7 +472,14 @@ st.write(f"Current Bid: {st.session_state.current_bid:.1f} Cr by {st.session_sta
 
 # AI bidding simulation (unchanged)
 if not st.session_state.ai_bid_done:
-    bidding_teams = [t for t in ai_teams if t.interested_in(player) and t.can_buy(player, st.session_state.current_bid + 0.1)]
+    if st.session_state.auction_index < len(players):
+    player = players[st.session_state.auction_index]
+    # ... display player info ...
+
+    # AI bidding — put the line here
+    bidding_teams = [t for t in ai_teams 
+                     if t.interested_in(player) 
+                     and t.can_buy(player, st.session_state.current_bid + 0.1)]
     if bidding_teams:
         bidding_team = random.choice(bidding_teams)
         max_bid = min(st.session_state.current_bid + random.uniform(0.1, 1.0), player['base_price'] * random.uniform(1.1, 3.0))
@@ -703,6 +710,7 @@ if st.session_state.user_team:
     st.sidebar.write(f"Points: {st.session_state.user_team.points}, NRR: {st.session_state.user_team.nrr:.2f}")
     st.sidebar.subheader("Tournament Stats")
     st.sidebar.json(st.session_state.user_team.tournament_stats)
+
 
 
 
