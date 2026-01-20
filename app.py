@@ -474,10 +474,10 @@ if st.session_state.phase == 'auction':
 
             # AI bidding simulation (now safely inside, after player is defined)
             if not st.session_state.ai_bid_done:
-                bidding_teams = [t for t in ai_teams if t.interested_in(player) and t.can_buy(player, st.session_state.current_bid + 0.1)]
+                bidding_teams = [t for t in ai_teams if t.interested_in(players) and t.can_buy(players, st.session_state.current_bid + 0.1)]
                 if bidding_teams:
                     bidding_team = random.choice(bidding_teams)
-                    max_bid = min(st.session_state.current_bid + random.uniform(0.1, 1.0), player['base_price'] * random.uniform(1.1, 3.0))
+                    max_bid = min(st.session_state.current_bid + random.uniform(0.1, 1.0), players['base_price'] * random.uniform(1.1, 3.0))
                     max_bid = min(max_bid, bidding_team.purse * 0.15)
                     if max_bid > st.session_state.current_bid:
                         inc = random.uniform(0.1, min(1.0, max_bid - st.session_state.current_bid))
@@ -491,8 +491,8 @@ if st.session_state.phase == 'auction':
                     st.session_state.ai_bid_done = True
                     if st.session_state.current_bidder == 'Auctioneer':
                         # No interest from anyone, unsold immediately
-                        st.write(f"{player['name']} unsold! No interest.")
-                        st.session_state.auction_results.append(f"{player['name']} unsold (no interest).")
+                        st.write(f"{players['name']} unsold! No interest.")
+                        st.session_state.auction_results.append(f"{players['name']} unsold (no interest).")
                         st.session_state.auction_index += 1
                         st.session_state.current_bid = 0.0
                         st.session_state.current_bidder = 'Auctioneer'
@@ -503,13 +503,13 @@ if st.session_state.phase == 'auction':
             if not st.session_state.user_passed:
                 col_bid1, col_bid2, col_pass = st.columns(3)
                 with col_bid1:
-                    if st.button(f"Bid {st.session_state.current_bid + 0.1:.1f} Cr") and st.session_state.user_team.can_buy(player, st.session_state.current_bid + 0.1):
+                    if st.button(f"Bid {st.session_state.current_bid + 0.1:.1f} Cr") and st.session_state.user_team.can_buy(players, st.session_state.current_bid + 0.1):
                         st.session_state.current_bid += 0.1
                         st.session_state.current_bidder = st.session_state.user_team.name
                         st.session_state.ai_bid_done = False  # Reset for AI to respond
                         st.rerun()
                 with col_bid2:
-                    if st.button(f"Bid {st.session_state.current_bid + 0.5:.1f} Cr") and st.session_state.user_team.can_buy(player, st.session_state.current_bid + 0.5):
+                    if st.button(f"Bid {st.session_state.current_bid + 0.5:.1f} Cr") and st.session_state.user_team.can_buy(players, st.session_state.current_bid + 0.5):
                         st.session_state.current_bid += 0.5
                         st.session_state.current_bidder = st.session_state.user_team.name
                         st.session_state.ai_bid_done = False
@@ -698,6 +698,7 @@ if st.session_state.user_team:
     st.sidebar.write(f"Points: {st.session_state.user_team.points}, NRR: {st.session_state.user_team.nrr:.2f}")
     st.sidebar.subheader("Tournament Stats")
     st.sidebar.json(st.session_state.user_team.tournament_stats)
+
 
 
 
