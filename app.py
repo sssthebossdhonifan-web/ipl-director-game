@@ -524,8 +524,8 @@ if time.time() - st.session_state.bid_time > 5 and st.session_state.ai_bid_done:
     st.session_state.current_bidder = 'Auctioneer'
     st.session_state.ai_bid_done = False
     st.rerun()
-        else:
-            st.success("Auction Complete! Proceed to Trades.")
+else:
+     st.success("Auction Complete! Proceed to Trades.")
             if st.button("Start Trades"):
                 st.session_state.phase = 'trade'
                 st.rerun()
@@ -679,5 +679,6 @@ if st.session_state.user_team:
     st.sidebar.write(f"Points: {st.session_state.user_team.points}, NRR: {st.session_state.user_team.nrr:.2f}")
     st.sidebar.subheader("Tournament Stats")
     st.sidebar.json(st.session_state.user_team.tournament_stats)
+
 
 
