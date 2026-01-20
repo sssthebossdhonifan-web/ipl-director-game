@@ -463,8 +463,9 @@ if st.session_state.phase == 'auction':
                 st.session_state.current_bid = player['base_price']
                 st.session_state.bid_time = time.time()
                 st.session_state.ai_bid_done = False
-             if 'user_passed' not in st.session_state:
+            if 'user_passed' not in st.session_state:
                  st.session_state.user_passed = False
+           
 
            # Display current bid status
 st.write(f"Current Bid: {st.session_state.current_bid:.1f} Cr by {st.session_state.current_bidder}")
@@ -702,6 +703,7 @@ if st.session_state.user_team:
     st.sidebar.write(f"Points: {st.session_state.user_team.points}, NRR: {st.session_state.user_team.nrr:.2f}")
     st.sidebar.subheader("Tournament Stats")
     st.sidebar.json(st.session_state.user_team.tournament_stats)
+
 
 
 
