@@ -524,3 +524,154 @@ if st.session_state.phase == 'auction':
             if st.button("Start Trades"):
                 st.session_state.phase = 'trade'
                 st.rerun()
+# Part 3: Trade Phase, Season Phase, Match Simulator (with Impact Player and DLS Rain), Sidebar
+
+# Trade phase
+if st.session_state.phase == 'trade':
+    st.title("Trade Phase")
+    if st.session_state.trade_done < 3:  # Allow up to 3 trades
+        st.write("Propose a trade with an AI team.")
+        trade_team = st.selectbox("Select Team to Trade With", [t.name for t in ai_teams])
+        your_player = st.selectbox("Your Player to Trade", [p['name'] for p in st.session_state.user_team.squad])
+        their_player = st.selectbox("Their Player to Get", [p['name'] for p in next(t for t in ai_teams if t.name == trade_team).squad if p['role'] == next(p for p in st.session_state.user_team.squad if p['name'] == your_player)['role']])  # Same role
+        if st.button("Propose Trade"):
+            ai_team = next(t for t in ai_teams if t.name == trade_team)
+            your_p = next(p for p in st.session_state.user_team.squad if p['name'] == your_player)
+            their_p = next(p for p in ai_team.squad if p['name'] == their_player)
+            if random.random() < 0.5:  # 50% chance AI accepts
+                # Swap players
+                st.session_state.user_team.squad.remove(your_p)
+                ai_team.squad.remove(their_p)
+                st.session_state.user_team.squad.append(their_p)
+                ai_team.squad.append(your_p)
+                # Adjust overseas if necessary
+                if your_p['country'] != 'India' and their_p['country'] == 'India':
+                    st.session_state.user_team.overseas -= 1
+                    ai_team.overseas += 1
+                elif your_p['country'] == 'India' and their_p['country'] != 'India':
+                    st.session_state.user_team.overseas += 1
+                    ai_team.overseas -= 1
+                st.write("Trade Accepted!")
+            else:
+                st.write("Trade Rejected!")
+            st.session_state.trade_done += 1
+            st.rerun()
+    else:
+        st.success("Trades Complete! Proceed to Season.")
+        if st.button("Start Season"):
+            st.session_state.phase = 'season'
+            st.rerun()
+
+# Season and Match phase
+if st.session_state.phase == 'season':
+    st.title("IPL Season")
+    opponents = ai_teams.copy()
+    random.shuffle(opponents)
+    if st.session_state.match_index < len(opponents):
+        opp = opponents[st.session_state.match_index]
+        st.write(f"Match vs {opp.name}")
+        if st.button("Start Match"):
+            st.session_state.innings = {'score': 0, 'wickets': 0, 'overs': 0.0, 'target': 0, 'bat_team': st.session_state.user_team, 'bowl_team': opp, 'ball_index': 0, 'rain': False, 'impact_sub': False}
+            st.rerun()
+    else:
+        st.success("Season Complete! Calculate standings.")
+        all_teams = ai_teams + [st.session_state.user_team]
+        standings = sorted(all_teams, key=lambda t: (-t.points, -t.nrr))
+        st.write("Standings:")
+        for t in standings:
+            st.write(f"{t.name}: {t.points} pts, NRR {t.nrr:.2f}")
+        if st.session_state.user_team in standings[:4]:
+            st.write("You made playoffs!")
+
+# Ball-by-ball match sim with impact player
+if 'innings' in st.session_state and st.session_state.innings:
+    innings = st.session_state.innings
+    if innings['ball_index'] < 120 and innings['wickets'] < 10:
+        if innings['bat_team'] == st.session_state.user_team:
+            style = st.selectbox("Batting Style", ['Defensive', 'Normal', 'Aggressive'])
+            wicket_prob = 0.05 if style == 'Defensive' else 0.1 if style == 'Normal' else 0.15
+        else:
+            style = st.selectbox("Bowling Type", ['Pace', 'Spin', 'Swing'])
+            wicket_prob = 0.12 if style == 'Swing' else 0.1 if style == 'Spin' else 0.08
+
+        if innings['ball_index'] == 60 and not innings['impact_sub']:  # After 10 overs, allow impact sub
+            st.write("Impact Player Substitution Available!")
+            sub_options = [p['name'] for p in innings['bat_team'].squad if p['role'] == 'AR' or p['role'] == 'BOWL']  # Example: sub AR or Bowl
+            sub_player = st.selectbox("Select Impact Player to Substitute In", sub_options)
+            if st.button("Substitute Impact Player"):
+                # Simulate sub: boost skills for simplicity
+                innings['impact_sub'] = True
+                wicket_prob -= 0.02  # Boost defense
+                st.write(f"Impact Player {sub_player} substituted! Boost applied.")
+
+        if st.button("Bowl/Bat Ball"):
+            run = random.choice([0, 1, 2, 3, 4, 6])
+            wicket = random.random() < wicket_prob
+            if wicket:
+                innings['wickets'] += 1
+                st.write("Wicket!")
+            else:
+                innings['score'] += run
+                st.write(f"Runs: {run}")
+            innings['ball_index'] += 1
+            innings['overs'] = innings['ball_index'] // 6 + (innings['ball_index'] % 6) / 10
+            if random.random() < 0.05 and innings['ball_index'] > 60:
+                innings['rain'] = True
+                overs_left = 20 - innings['overs']
+                wk_lost = innings['wickets']
+                resource = dls_table[wk_lost][int(overs_left)]
+                full = dls_table[0][20]
+                if innings['target'] > 0:
+                    innings['target'] = int(innings['target'] * (resource / full) + 1)
+                    st.write(f"Rain! Target adjusted to {innings['target']}")
+            st.write(f"Score: {innings['score']}/{innings['wickets']} in {innings['overs']:.1f} overs")
+            innings['bat_team'].update_tournament_stats(run if not wicket else 0, 1 if wicket else 0)
+            st.rerun()
+    else:
+        if innings['target'] == 0:
+            innings['target'] = innings['score'] + 1
+            st.session_state.innings = {'score': 0, 'wickets': 0, 'overs': 0.0, 'target': innings['target'], 'bat_team': innings['bowl_team'], 'bowl_team': innings['bat_team'], 'ball_index': 0, 'rain': False, 'impact_sub': False}
+            st.write("Second Innings Start")
+            st.rerun()
+        else:
+            user = st.session_state.user_team
+            opp = innings['bowl_team'] if innings['bat_team'] == user else innings['bat_team']
+            if innings['score'] > innings['target'] - 1:
+                winner = innings['bat_team']
+            elif innings['score'] < innings['target'] - 1:
+                winner = innings['bowl_team']
+            else:
+                winner = None
+            runs_scored = innings['score']
+            overs_faced = innings['overs'] if innings['overs'] > 0 else 20
+            runs_conceded = innings['target'] - 1
+            overs_bowled = 20 if innings['wickets'] == 10 else innings['overs']
+            nrr = (runs_scored / overs_faced) - (runs_conceded / overs_bowled) if winner else 0
+            if winner == user:
+                user.points += 2
+                user.nrr += nrr
+                opp.nrr -= nrr
+            elif winner == opp:
+                opp.points += 2
+                opp.nrr += nrr
+                user.nrr -= nrr
+            else:
+                user.points += 1
+                opp.points += 1
+            st.write(f"Match Result: {winner.name if winner else 'Tie'} wins!")
+            st.session_state.match_index += 1
+            st.session_state.innings = None
+            st.rerun()
+
+# Sidebar
+st.sidebar.title("Your Team")
+if st.session_state.user_team:
+    squad_df = pd.DataFrame(st.session_state.user_team.squad)
+    if not squad_df.empty:
+        st.sidebar.dataframe(squad_df[['name', 'role']])
+    st.sidebar.write(f"Purse: {st.session_state.user_team.purse:.2f} Cr")
+    st.sidebar.write(f"Overseas: {st.session_state.user_team.overseas}/8")
+    st.sidebar.write(f"Points: {st.session_state.user_team.points}, NRR: {st.session_state.user_team.nrr:.2f}")
+    st.sidebar.subheader("Tournament Stats")
+    st.sidebar.json(st.session_state.user_team.tournament_stats)
+
